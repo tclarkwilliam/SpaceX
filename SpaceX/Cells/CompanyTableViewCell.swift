@@ -13,8 +13,8 @@ class CompanyTableViewCell: UITableViewCell {
 
   @IBOutlet weak var statementLabel: UILabel!
 
-  func configure() {
-    statementLabel.text = "{companyName} was founded by {founderName} in {year}. It has now {employees} employees, {launchSites} launch sites, and is valued at USD {valuation}"
+  func configure(viewModel: CompanyInfoViewModel) {
+    statementLabel.text = "\(viewModel.name) was founded by \(viewModel.founder) in \(viewModel.founded). It has now \(viewModel.employees) employees, \(viewModel.launchSites) launch sites, and is valued at \(viewModel.formattedValuation)"
   }
 
 }

@@ -7,12 +7,20 @@
 
 struct LaunchesSection: LaunchesSectionable {
 
+  let launchViewModels: [LaunchViewModel]
+
   var title: String {
-    "LAUNCHES"
+    Constants.title.rawValue
   }
 
   var numberOfRows: Int {
-    10
+    launchViewModels.count
   }
 
+}
+
+private extension LaunchesSection {
+  enum Constants: String {
+    case title = "LAUNCHES"
+  }
 }
