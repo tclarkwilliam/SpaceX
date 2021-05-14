@@ -33,6 +33,21 @@ struct LaunchViewModel {
     }
   }
 
+  var articleURL: URL? {
+    guard let articlePath = launch.links.article else { return nil }
+    return URL(string: articlePath)
+  }
+
+  var wikipediaURL: URL? {
+    guard let wikipediaPath = launch.links.wikipedia else { return nil }
+    return URL(string: wikipediaPath)
+  }
+
+  var videoURL: URL? {
+    guard let videoPath = launch.links.video else { return nil }
+    return URL(string: videoPath)
+  }
+
   var launchDate: String {
     dateFormatter.string(from: launch.date)
   }
@@ -58,11 +73,16 @@ struct LaunchViewModel {
      "\(daysBetween(start: launch.date, end: date))"
   }
 
+  var launchYear: Int {
+    Calendar.current.dateComponents([.year],
+                                    from: launch.date).year ?? 0
+  }
+
   private func daysBetween(start: Date,
                            end: Date) -> Int {
     Calendar.current.dateComponents([.day],
                                     from: start,
-                                    to: end).day!
+                                    to: end).day ?? 0
   }
 
   private let dateFormatter: DateFormatter = {

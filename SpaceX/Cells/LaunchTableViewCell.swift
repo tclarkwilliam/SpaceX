@@ -11,13 +11,13 @@ class LaunchTableViewCell: UITableViewCell {
 
   static let identifier = String(describing: LaunchTableViewCell.self)
 
-  @IBOutlet private weak var missionImageView: UIImageView!
-  @IBOutlet private weak var missionLabel: UILabel!
-  @IBOutlet private weak var dateLabel: UILabel!
-  @IBOutlet private weak var rocketLabel: UILabel!
-  @IBOutlet private weak var startingPointLabel: UILabel!
-  @IBOutlet private weak var daysLabel: UILabel!
-  @IBOutlet private weak var outcomeImageView: UIImageView!
+  @IBOutlet weak private var missionImageView: UIImageView!
+  @IBOutlet weak private var missionLabel: UILabel!
+  @IBOutlet weak private var dateLabel: UILabel!
+  @IBOutlet weak private var rocketLabel: UILabel!
+  @IBOutlet weak private var startingPointLabel: UILabel!
+  @IBOutlet weak private var daysLabel: UILabel!
+  @IBOutlet weak private var outcomeImageView: UIImageView!
 
   func configure(viewModel: LaunchViewModel) {
 //    viewModel.fetchMissionImage { self.missionImageView.image = $0 }
