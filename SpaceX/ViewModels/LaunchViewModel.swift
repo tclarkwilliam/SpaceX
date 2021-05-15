@@ -24,13 +24,15 @@ struct LaunchViewModel {
   }
 
   func fetchMissionImage(completion: @escaping ((UIImage?) -> Void)) {
-    if let imagePath = launch.links.missionImagePath,
-       let url = URL(string: imagePath) {
-      Service().fetch(url: url) { data, response, error in
-        guard let data = data, error == nil else { return }
-        completion(UIImage(data: data))
-      }
+    guard let path = missionImagePath else { return }
+    ImageService().fetchMissionImage(path: path) { result in
+      guard case let .success(image) = result else { return }
+      completion(image)
     }
+  }
+
+  var missionImagePath: String? {
+    launch.links.missionImagePath
   }
 
   var articleURL: URL? {
@@ -61,7 +63,7 @@ struct LaunchViewModel {
   }
 
   var launchImageTintColour: UIColor {
-    isLaunchSuccessfull ? .green : .red
+    isLaunchSuccessfull ? .systemGreen : .systemRed
   }
 
   var launchDateDaysPrefix: String {

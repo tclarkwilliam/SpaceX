@@ -7,8 +7,9 @@
 
 import Foundation
 
-struct Launch: Decodable {
-
+struct Launch: Decodable, Identifiable {
+  
+  let id = UUID()
   let missionName: String
   let rocket: Rocket
   let date: Date

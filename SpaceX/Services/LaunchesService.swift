@@ -29,8 +29,8 @@ class LaunchesService {
     do {
       let decoder = JSONDecoder()
       decoder.dateDecodingStrategy = .iso8601
-      let companyInfo = try decoder.decode([Launch].self, from: data)
-      completion(.success(companyInfo))
+      let launches = try decoder.decode([Launch].self, from: data)
+      completion(.success(launches))
     } catch {
       completion(.failure(error))
     }

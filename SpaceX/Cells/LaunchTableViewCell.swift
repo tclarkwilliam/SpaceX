@@ -20,7 +20,7 @@ class LaunchTableViewCell: UITableViewCell {
   @IBOutlet weak private var outcomeImageView: UIImageView!
 
   func configure(viewModel: LaunchViewModel) {
-//    viewModel.fetchMissionImage { self.missionImageView.image = $0 }
+    viewModel.fetchMissionImage { self.missionImageView.image = $0 }
     missionLabel.text = viewModel.missionName
     rocketLabel.text = viewModel.formattedRocket
     dateLabel.text = viewModel.launchDate

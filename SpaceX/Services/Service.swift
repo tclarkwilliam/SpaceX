@@ -9,6 +9,7 @@ import Foundation
 
 enum ServiceError: Error {
   case invalidData
+  case invalidURL
 }
 
 class Service {

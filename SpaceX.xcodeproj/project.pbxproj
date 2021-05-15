@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		471DEC4E264FCC740088F1AE /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471DEC4D264FCC740088F1AE /* Cache.swift */; };
 		473A0C202649B63200D5D1DF /* Launch+Arrange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473A0C1F2649B63200D5D1DF /* Launch+Arrange.swift */; };
 		473A0C282649B66900D5D1DF /* Rocket+Arrange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473A0C272649B66900D5D1DF /* Rocket+Arrange.swift */; };
 		473A0C2D2649B68500D5D1DF /* Links+Arrange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473A0C2C2649B68500D5D1DF /* Links+Arrange.swift */; };
@@ -45,6 +46,8 @@
 		4780E9E2264460C70027D12B /* LaunchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4780E9E1264460C70027D12B /* LaunchTableViewCell.swift */; };
 		4780E9F6264472CB0027D12B /* CompanyTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4780E9F5264472CB0027D12B /* CompanyTableViewCell.xib */; };
 		4780E9FB264472D20027D12B /* CompanyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4780E9FA264472D20027D12B /* CompanyTableViewCell.swift */; };
+		4782D8B6265013B100E0229E /* ImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4782D8B5265013B100E0229E /* ImageService.swift */; };
+		4782D8C3265092CB00E0229E /* CachedImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4782D8C2265092CB00E0229E /* CachedImage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +68,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		471DEC4D264FCC740088F1AE /* Cache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cache.swift; sourceTree = "<group>"; };
 		473A0C1F2649B63200D5D1DF /* Launch+Arrange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Launch+Arrange.swift"; sourceTree = "<group>"; };
 		473A0C272649B66900D5D1DF /* Rocket+Arrange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Rocket+Arrange.swift"; sourceTree = "<group>"; };
 		473A0C2C2649B68500D5D1DF /* Links+Arrange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Links+Arrange.swift"; sourceTree = "<group>"; };
@@ -109,6 +113,8 @@
 		4780E9E1264460C70027D12B /* LaunchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchTableViewCell.swift; sourceTree = "<group>"; };
 		4780E9F5264472CB0027D12B /* CompanyTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CompanyTableViewCell.xib; sourceTree = "<group>"; };
 		4780E9FA264472D20027D12B /* CompanyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyTableViewCell.swift; sourceTree = "<group>"; };
+		4782D8B5265013B100E0229E /* ImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageService.swift; sourceTree = "<group>"; };
+		4782D8C2265092CB00E0229E /* CachedImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CachedImage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -136,6 +142,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		471DEC4C264FCC690088F1AE /* Storage */ = {
+			isa = PBXGroup;
+			children = (
+				471DEC4D264FCC740088F1AE /* Cache.swift */,
+			);
+			path = Storage;
+			sourceTree = "<group>";
+		};
 		473A0C1E2649B61D00D5D1DF /* Arrangers */ = {
 			isa = PBXGroup;
 			children = (
@@ -152,9 +166,9 @@
 			children = (
 				473A0C3D2649CFD800D5D1DF /* CompanyInfoServiceTests.swift */,
 				476924502649903900E47A7E /* CompanyInfoViewModelTests.swift */,
+				473A68E3264B295C00D8A14B /* LaunchesFilterApplicatorTests.swift */,
 				473A0C57264AB30700D5D1DF /* LaunchesServiceTests.swift */,
 				4780E9BF26445E1B0027D12B /* LaunchViewModelTests.swift */,
-				473A68E3264B295C00D8A14B /* LaunchesFilterApplicatorTests.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -184,6 +198,7 @@
 				476924482645ABF700E47A7E /* Rocket.swift */,
 				47692407264520F500E47A7E /* Row.swift */,
 				476923FF264520E500E47A7E /* TableViewSection.swift */,
+				4782D8C2265092CB00E0229E /* CachedImage.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -192,6 +207,7 @@
 			isa = PBXGroup;
 			children = (
 				476924152645487000E47A7E /* CompanyInfoService.swift */,
+				4782D8B5265013B100E0229E /* ImageService.swift */,
 				4769243026458A5F00E47A7E /* LaunchesService.swift */,
 				4769242B264587AE00E47A7E /* Service.swift */,
 			);
@@ -237,6 +253,7 @@
 				4780E9B626445E1A0027D12B /* Info.plist */,
 				476923FD264520CE00E47A7E /* Models */,
 				476924142645484300E47A7E /* Services */,
+				471DEC4C264FCC690088F1AE /* Storage */,
 				4780E9ED264467340027D12B /* Storyboards */,
 				4780E9E9264465D20027D12B /* ViewControllers */,
 				4769241A26457E9A00E47A7E /* ViewModels */,
@@ -443,9 +460,11 @@
 				473A68DC264B1CDE00D8A14B /* FilterLaunchesViewController.swift in Sources */,
 				476924162645487000E47A7E /* CompanyInfoService.swift in Sources */,
 				475FCF73264D2A41008C02B3 /* ActivityViewController.swift in Sources */,
+				471DEC4E264FCC740088F1AE /* Cache.swift in Sources */,
 				47692408264520F500E47A7E /* Row.swift in Sources */,
 				4780E9AD26445E130027D12B /* LaunchesViewController.swift in Sources */,
 				4780E9A926445E130027D12B /* AppDelegate.swift in Sources */,
+				4782D8B6265013B100E0229E /* ImageService.swift in Sources */,
 				475FCF6B264BF669008C02B3 /* FilterTableViewCell.swift in Sources */,
 				4769242C264587AE00E47A7E /* Service.swift in Sources */,
 				4780E9E2264460C70027D12B /* LaunchTableViewCell.swift in Sources */,
@@ -460,6 +479,7 @@
 				4769241C26457EA400E47A7E /* CompanyInfoViewModel.swift in Sources */,
 				4780E9AB26445E130027D12B /* SceneDelegate.swift in Sources */,
 				476924492645ABF700E47A7E /* Rocket.swift in Sources */,
+				4782D8C3265092CB00E0229E /* CachedImage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

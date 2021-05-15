@@ -141,7 +141,7 @@ extension FilterLaunchesViewController: UITableViewDelegate {
       selectedFilters.remove(at: rowToRemove)
     }
     row.selectedIndexPath = indexPath
-    print(selectedFilters)
+//    print(selectedFilters)
     tableView.reloadRows(at: [indexPath], with: .automatic)
   }
 

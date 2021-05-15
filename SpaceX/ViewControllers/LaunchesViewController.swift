@@ -23,7 +23,6 @@ class LaunchesViewController: UIViewController {
     title = Constants.title.rawValue
     configureTableView()
     fetchCompanyInfo()
-//    configureFilter() //Remove this
   }
 
   private func configureFilter() {
