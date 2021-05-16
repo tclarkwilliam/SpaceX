@@ -37,18 +37,14 @@ class LaunchesViewController: UIViewController {
 
   private func fetchCompanyInfo() {
     CompanyInfoService().fetchInfo { result in
-      switch result {
-      case .success(let companyInfo):
-        self.configureCompanyInfoSection(from: companyInfo)
-        self.fetchLaunches()
-      case .failure(let error):
-        print("Handle error \(error)")
-      }
+      guard case let .success(companyInfo) = result else { return }
+      self.configureCompanyInfoSection(from: companyInfo)
+      self.fetchLaunches()
     }
   }
 
   private func configureCompanyInfoSection(from companyInfo: CompanyInfo) {
-    let section = TableViewSection(title: Constants.company.rawValue,
+    let section = TableViewSection(title: Constants.companySectionHeader.rawValue,
                                    rows: [companyInfoRow(from: companyInfo)])
     updateSection(section)
   }
@@ -62,19 +58,15 @@ class LaunchesViewController: UIViewController {
 
   private func fetchLaunches() {
     LaunchesService().fetchLaunches { result in
-      switch result {
-      case .success(let launches):
-        self.configureLaunchesSection(from: launches)
-        self.configureFilter()
-      case .failure(let error):
-        print("Handle error \(error)")
-      }
+      guard case let .success(launches) = result else { return }
+      self.configureLaunchesSection(from: launches)
+      self.configureFilter()
     }
   }
 
   private func configureLaunchesSection(from launches: [Launch]) {
     let launchViewModels = launches.compactMap { LaunchViewModel(launch: $0) }
-    launchesSection = TableViewSection(title: Constants.launches.rawValue,
+    launchesSection = TableViewSection(title: Constants.launchesSectionHeader.rawValue,
                                        rows: launchRows(from: launchViewModels))
     updateSection(launchesSection)
     self.launchViewModels = launchViewModels
@@ -140,6 +132,17 @@ extension LaunchesViewController: UITableViewDataSource {
 
   func tableView(_ tableView: UITableView,
                  cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    if let cell = companyCell(tableView: tableView, indexPath: indexPath) {
+      return cell
+    }
+    if let cell = launchCell(tableView: tableView, indexPath: indexPath) {
+      return cell
+    }
+    return UITableViewCell()
+  }
+
+  private func companyCell(tableView: UITableView,
+                           indexPath: IndexPath) -> CompanyTableViewCell? {
     if let cell = tableView.dequeueReusableCell(withIdentifier: CompanyTableViewCell.identifier,
                                                 for: indexPath) as? CompanyTableViewCell,
        let row = sections[indexPath.section].rows[indexPath.row] as? ValueRow<CompanyInfoViewModel>,
@@ -148,6 +151,11 @@ extension LaunchesViewController: UITableViewDataSource {
       cell.configure(viewModel: viewModel)
       return cell
     }
+    return nil
+  }
+
+  private func launchCell(tableView: UITableView,
+                          indexPath: IndexPath) -> LaunchTableViewCell? {
     if let cell = tableView.dequeueReusableCell(withIdentifier: LaunchTableViewCell.identifier,
                                                 for: indexPath) as? LaunchTableViewCell,
        let row = sections[indexPath.section].rows[indexPath.row] as? ValueRow<LaunchViewModel>,
@@ -155,8 +163,7 @@ extension LaunchesViewController: UITableViewDataSource {
       cell.configure(viewModel: viewModel)
       return cell
     }
-    //Remove this return failure cell?
-    return UITableViewCell()
+    return nil
   }
 
 }
@@ -181,8 +188,8 @@ extension LaunchesViewController: UITableViewDelegate {
 private extension LaunchesViewController {
   enum Constants: String {
     case title = "SpaceX"
-    case company = "COMPANY"
-    case launches = "LAUNCHES"
+    case companySectionHeader = "COMPANY"
+    case launchesSectionHeader = "LAUNCHES"
     case filterSymbol = "line.horizontal.3.decrease.circle"
   }
 }

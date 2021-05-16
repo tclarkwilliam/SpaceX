@@ -20,23 +20,14 @@ class Cache<V> where V: Codable {
   }
 
   func save(_ value: V) {
-    do {
-      let data = try JSONEncoder().encode(value)
-      try data.write(to: fileURL)
-    } catch {
-      print("Handle error: \(error)")
-    }
+    let data = try? JSONEncoder().encode(value)
+    try? data?.write(to: fileURL)
   }
 
   var retrieve: V? {
-    guard FileManager.default.fileExists(atPath: fileURL.path) else { return nil }
-    do {
-      let data = try Data(contentsOf: fileURL)
-      return try JSONDecoder().decode(V.self, from: data)
-    } catch {
-      print("Handle error: \(error)")
-      return nil
-    }
+    guard FileManager.default.fileExists(atPath: fileURL.path),
+          let data = try? Data(contentsOf: fileURL) else { return nil }
+    return try? JSONDecoder().decode(V.self, from: data)
   }
 
   func clear() {
@@ -66,5 +57,5 @@ class Cache<V> where V: Codable {
 }
 
 enum CachePath: String {
-  case images = "co.uk.tomclark.Images"
+  case images = "Images"
 }

@@ -8,5 +8,5 @@
 import Foundation
 
 struct CachedImage: Codable {
-  let data: Data?
+  let data: Data
 }

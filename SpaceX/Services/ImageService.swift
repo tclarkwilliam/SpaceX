@@ -24,14 +24,12 @@ class ImageService {
   func fetchMissionImage(completion: @escaping (Result<UIImage?, Error>) -> Void) {
     if let data = cache.retrieve?.data {
       completion(.success(UIImage(data: data)))
-      print("CACHED")
     } else {
       guard let url = URL(string: path) else { return completion(.failure(ServiceError.invalidURL)) }
       service.fetch(url: url) { data, response, error in
         guard let data = data else { return completion(.failure(ServiceError.invalidData)) }
         self.cache.save(CachedImage(data: data))
         completion(.success(UIImage(data: data)))
-        print("FETCHED")
       }
     }
   }

@@ -14,7 +14,7 @@ class ImageServiceTests: XCTestCase {
   private var mockService: MockService!
   private var mockCache: MockCache!
   private let imagePath = "https://test/image.png"
-  private let imageData = UIImage(systemName: "xmark")?.pngData()
+  private let imageData = UIImage(systemName: "xmark")!.pngData()!
 
   override func setUp() {
     super.setUp()

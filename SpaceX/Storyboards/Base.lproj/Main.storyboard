@@ -52,6 +52,7 @@
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ynF-uS-HEm">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="272.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                         <state key="normal" title="Article"/>
                                         <connections>
                                             <action selector="articleButtonSelected" destination="1j8-Ja-O7l" eventType="touchUpInside" id="if4-fc-RUS"/>
@@ -59,6 +60,7 @@
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hCt-Wb-Paj">
                                         <rect key="frame" x="0.0" y="272.5" width="414" height="273"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                         <state key="normal" title="Wikipedia"/>
                                         <connections>
                                             <action selector="wikipediaButtonSelected" destination="1j8-Ja-O7l" eventType="touchUpInside" id="iaY-d2-lms"/>
@@ -66,6 +68,7 @@
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q3f-fS-AF4">
                                         <rect key="frame" x="0.0" y="545.5" width="414" height="272.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                         <state key="normal" title="Video"/>
                                         <connections>
                                             <action selector="videoButtonSelected" destination="1j8-Ja-O7l" eventType="touchUpInside" id="l2D-cE-NUp"/>
