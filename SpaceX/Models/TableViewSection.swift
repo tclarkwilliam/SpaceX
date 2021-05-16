@@ -23,4 +23,8 @@ struct TableViewSection {
     rows.count
   }
 
+  mutating func updateRows(_ updatedRows: [Row]) {
+    rows = updatedRows
+  }
+
 }

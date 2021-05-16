@@ -12,6 +12,7 @@ class LaunchesViewController: UIViewController {
   @IBOutlet weak private var launchesTableView: UITableView!
 
   private lazy var sections = [TableViewSection]()
+  private var launchesSection: TableViewSection?
   private var launchViewModels: [LaunchViewModel]?
 
   override func viewDidLoad() {
@@ -38,11 +39,7 @@ class LaunchesViewController: UIViewController {
     CompanyInfoService().fetchInfo { result in
       switch result {
       case .success(let companyInfo):
-        let companyInfoViewModel = CompanyInfoViewModel(companyInfo: companyInfo)
-        let row = ValueRow<CompanyInfoViewModel>()
-        row.value = companyInfoViewModel
-        let companySection = TableViewSection(title: Constants.company.rawValue, rows: [row])
-        self.updateSection(companySection)
+        self.configureCompanyInfoSection(from: companyInfo)
         self.fetchLaunches()
       case .failure(let error):
         print("Handle error \(error)")
@@ -50,23 +47,44 @@ class LaunchesViewController: UIViewController {
     }
   }
 
+  private func configureCompanyInfoSection(from companyInfo: CompanyInfo) {
+    let section = TableViewSection(title: Constants.company.rawValue,
+                                   rows: [companyInfoRow(from: companyInfo)])
+    updateSection(section)
+  }
+
+  private func companyInfoRow(from companyInfo: CompanyInfo) -> ValueRow<CompanyInfoViewModel> {
+    let companyInfoViewModel = CompanyInfoViewModel(companyInfo: companyInfo)
+    let row = ValueRow<CompanyInfoViewModel>()
+    row.value = companyInfoViewModel
+    return row
+  }
+
   private func fetchLaunches() {
     LaunchesService().fetchLaunches { result in
       switch result {
       case .success(let launches):
-        let launchViewModels = launches.compactMap { LaunchViewModel(launch: $0) }
-        let rows: [ValueRow<LaunchViewModel>] = launchViewModels.compactMap { vm in
-          let row = ValueRow<LaunchViewModel>()
-          row.value = vm
-          return row
-        }
-        let launchesSection = TableViewSection(title: Constants.launches.rawValue, rows: rows)
-        self.updateSection(launchesSection)
-        self.launchViewModels = launchViewModels
+        self.configureLaunchesSection(from: launches)
         self.configureFilter()
       case .failure(let error):
         print("Handle error \(error)")
       }
+    }
+  }
+
+  private func configureLaunchesSection(from launches: [Launch]) {
+    let launchViewModels = launches.compactMap { LaunchViewModel(launch: $0) }
+    launchesSection = TableViewSection(title: Constants.launches.rawValue,
+                                       rows: launchRows(from: launchViewModels))
+    updateSection(launchesSection)
+    self.launchViewModels = launchViewModels
+  }
+
+  private func launchRows(from launchViewModels: [LaunchViewModel]) -> [ValueRow<LaunchViewModel>] {
+    return launchViewModels.compactMap { launchViewModel in
+      let launchRow = ValueRow<LaunchViewModel>()
+      launchRow.value = launchViewModel
+      return launchRow
     }
   }
 
@@ -81,26 +99,23 @@ class LaunchesViewController: UIViewController {
   @objc private func showFilters() {
     let identifier = FilterLaunchesViewController.identifier
     guard let viewController = storyboard?.instantiateViewController(withIdentifier: identifier) as? FilterLaunchesViewController else { return }
-    viewController.updateLaunches = { launchViewModels in
-      //TODO: don't create new section, update viewModels
-      let rows: [ValueRow<LaunchViewModel>] = launchViewModels.compactMap { vm in
-        let row = ValueRow<LaunchViewModel>()
-        row.value = vm
-        return row
-      }
-      let launchesSection = TableViewSection(title: Constants.launches.rawValue, rows: rows)
-      self.sections.remove(at: 1)
-      self.updateSection(launchesSection)
-      let indexPath = IndexPath(row: 0, section: 0)
-      self.launchesTableView.scrollToRow(at: indexPath, at: .top, animated: false)
-    }
+    viewController.updateLaunches = { self.updateLaunchesSection(with: $0) }
     viewController.launchViewModels = launchViewModels
     let navigationController = UINavigationController(rootViewController: viewController)
     navigationController.navigationBar.tintColor = .black
     present(navigationController, animated: true)
   }
 
-  private func updateSection(_ section: TableViewSection) {
+  private func updateLaunchesSection(with launchViewModels: [LaunchViewModel]) {
+    self.launchesSection?.updateRows(self.launchRows(from: launchViewModels))
+    self.sections.remove(at: self.sections.count - 1)
+    self.updateSection(self.launchesSection)
+    let indexPath = IndexPath(row: 0, section: 0)
+    self.launchesTableView.scrollToRow(at: indexPath, at: .top, animated: false)
+  }
+
+  private func updateSection(_ section: TableViewSection?) {
+    guard let section = section else { return }
     sections.insert(section, at: self.sections.count)
     launchesTableView.reloadData()
   }
@@ -125,15 +140,18 @@ extension LaunchesViewController: UITableViewDataSource {
 
   func tableView(_ tableView: UITableView,
                  cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    if let cell = tableView.dequeueReusableCell(withIdentifier: CompanyTableViewCell.identifier, for: indexPath) as? CompanyTableViewCell,
+    if let cell = tableView.dequeueReusableCell(withIdentifier: CompanyTableViewCell.identifier,
+                                                for: indexPath) as? CompanyTableViewCell,
        let row = sections[indexPath.section].rows[indexPath.row] as? ValueRow<CompanyInfoViewModel>,
        let viewModel = row.value {
       cell.selectionStyle = .none
       cell.configure(viewModel: viewModel)
       return cell
-    } else if let cell = tableView.dequeueReusableCell(withIdentifier: LaunchTableViewCell.identifier, for: indexPath) as? LaunchTableViewCell,
-              let row = sections[indexPath.section].rows[indexPath.row] as? ValueRow<LaunchViewModel>,
-              let viewModel = row.value {
+    }
+    if let cell = tableView.dequeueReusableCell(withIdentifier: LaunchTableViewCell.identifier,
+                                                for: indexPath) as? LaunchTableViewCell,
+       let row = sections[indexPath.section].rows[indexPath.row] as? ValueRow<LaunchViewModel>,
+       let viewModel = row.value {
       cell.configure(viewModel: viewModel)
       return cell
     }
