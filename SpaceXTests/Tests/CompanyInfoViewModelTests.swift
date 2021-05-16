@@ -23,28 +23,9 @@ class CompanyInfoViewModelTests: XCTestCase {
     super.tearDown()
   }
 
-  func test_name_returnsName() {
-    XCTAssertEqual(subject.name, "Name")
-  }
-
-  func test_founder_returnsFounder() {
-    XCTAssertEqual(subject.founder, "Founder")
-  }
-
-  func test_founded_returnsFounded() {
-    XCTAssertEqual(subject.founded, 1900)
-  }
-
-  func test_employees_returnsEmployees() {
-    XCTAssertEqual(subject.employees, 100)
-  }
-
-  func test_formattedValuation_returnsFormattedValuation() {
-    XCTAssertEqual(subject.formattedValuation, "USD 100,000,000.00")
-  }
-
-  func test_launchSites_returnsLaunchSites() {
-    XCTAssertEqual(subject.launchSites, 3)
+  func test_statement_returnsFormattedIntro() {
+    let statement = "Name was founded by Founder in 1900. It has now 100 employees, 3 launch sites, and is valued at USD 100,000,000.00"
+    XCTAssertEqual(subject.statement, statement)
   }
 
 }

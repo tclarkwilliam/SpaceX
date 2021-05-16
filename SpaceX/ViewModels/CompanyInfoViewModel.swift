@@ -15,33 +15,17 @@ struct CompanyInfoViewModel {
     self.companyInfo = companyInfo
   }
 
-  var name: String {
-    companyInfo.name
+  var statement: String {
+    return "\(companyInfo.name) was founded by \(companyInfo.founder) in \(companyInfo.founded). It has now \(companyInfo.employees) employees, \(companyInfo.launchSites) launch sites, and is valued at \(formattedValuation)"
   }
 
-  var founder: String {
-    companyInfo.founder
-  }
-
-  var founded: Int {
-    companyInfo.founded
-  }
-
-  var employees: Int {
-    companyInfo.employees
-  }
-
-  var formattedValuation: String {
-    guard let currencyCode = numberFormatter.currencyCode,
-          let formattedValuation = numberFormatter.string(from: companyInfo.valuation as NSNumber) else { return "" }
+  private var formattedValuation: String {
+    guard let currencyCode = Self.numberFormatter.currencyCode,
+          let formattedValuation = Self.numberFormatter.string(from: companyInfo.valuation as NSNumber) else { return "" }
     return "\(currencyCode) \(formattedValuation)"
   }
 
-  var launchSites: Int {
-    companyInfo.launchSites
-  }
-
-  private let numberFormatter: NumberFormatter = {
+  private static let numberFormatter: NumberFormatter = {
     let numberFormatter = NumberFormatter()
     numberFormatter.locale = Locale(identifier: "en_US")
     numberFormatter.numberStyle = .currency

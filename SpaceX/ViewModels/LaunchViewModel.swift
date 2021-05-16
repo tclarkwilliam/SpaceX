@@ -51,7 +51,7 @@ struct LaunchViewModel {
   }
 
   var launchDate: String {
-    dateFormatter.string(from: launch.date)
+    Self.dateFormatter.string(from: launch.date)
   }
 
   var isLaunchSuccessfull: Bool {
@@ -88,8 +88,7 @@ struct LaunchViewModel {
                                     to: end).day ?? 0
   }
 
-  // Make lazy or similar
-  private let dateFormatter: DateFormatter = {
+  private static let dateFormatter: DateFormatter = {
     let dateFormatter = DateFormatter()
     dateFormatter.dateStyle = .long
     dateFormatter.timeStyle = .long
