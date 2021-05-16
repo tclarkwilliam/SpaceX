@@ -12,13 +12,9 @@ class FilterLaunchesViewController: UIViewController {
   @IBOutlet weak var filterTableView: UITableView!
 
   var launchViewModels: [LaunchViewModel]?
-  var selectedFilters: [Row] = [Row]()
   var updateLaunches: (([LaunchViewModel]) -> Void)?
-
-  private enum Constants: String {
-    case title = "Filter Launches"
-  }
-
+  
+  private var selectedFilters: [Row] = [Row]()
   private lazy var sections = [TableViewSection]()
 
   static let identifier = String(describing: FilterLaunchesViewController.self)
@@ -26,15 +22,24 @@ class FilterLaunchesViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     configureNavigationBar()
-    filterTableView.dataSource = self
-    filterTableView.delegate = self
-    let nib = UINib(nibName: FilterTableViewCell.identifier, bundle: nil)
-    filterTableView.register(nib, forCellReuseIdentifier: FilterTableViewCell.identifier)
+    configureTableView()
     selectedFilters.removeAll()
     configureLaunchSuccessSection()
     configureLaunchYearsSection()
     configureSortSection()
   }
+
+  private func configureTableView() {
+    filterTableView.dataSource = self
+    filterTableView.delegate = self
+    registerCells()
+  }
+
+  private func registerCells() {
+    let nib = UINib(nibName: FilterTableViewCell.identifier, bundle: nil)
+    filterTableView.register(nib, forCellReuseIdentifier: FilterTableViewCell.identifier)
+  }
+
 
   private func configureLaunchSuccessSection() {
     let successRow = ValueRow<LaunchOutcome>(title: LaunchOutcome.success.rawValue)
@@ -42,7 +47,7 @@ class FilterLaunchesViewController: UIViewController {
     let failureRow = ValueRow<LaunchOutcome>(title: LaunchOutcome.failure.rawValue)
     failureRow.value = .failure
     let rows = [successRow, failureRow]
-    let launchSuccessSection = TableViewSection(title: "Launch Success",
+    let launchSuccessSection = TableViewSection(title: Constants.launchSuccess.rawValue,
                                                 rows: rows)
     sections.append(launchSuccessSection)
   }
@@ -56,7 +61,7 @@ class FilterLaunchesViewController: UIViewController {
       yearRow.value = year
       return yearRow
     }
-    let launchYearsSection = TableViewSection(title: "Launch Years",
+    let launchYearsSection = TableViewSection(title: Constants.launchYears.rawValue,
                                               allowsMultipleSelection: true,
                                               rows: rows)
     sections.append(launchYearsSection)
@@ -68,18 +73,18 @@ class FilterLaunchesViewController: UIViewController {
     let descendingRow = ValueRow<SortOrder>(title: SortOrder.descending.rawValue)
     descendingRow.value = .descending
     let rows = [ascendingRow, descendingRow]
-    let sortSection = TableViewSection(title: "Sort",
+    let sortSection = TableViewSection(title: Constants.sort.rawValue,
                                        rows: rows)
     sections.append(sortSection)
   }
 
   private func configureNavigationBar() {
     title = Constants.title.rawValue
-    navigationItem.leftBarButtonItem = .init(image: UIImage(systemName: "xmark"),
+    navigationItem.leftBarButtonItem = .init(image: UIImage(systemName: GlobalConstants.crossSymbol.rawValue),
                                              style: .plain,
                                              target: self,
                                              action: #selector(dismissViewController))
-    navigationItem.rightBarButtonItem = .init(image: UIImage(systemName: "checkmark"),
+    navigationItem.rightBarButtonItem = .init(image: UIImage(systemName: GlobalConstants.checkmarkSymbol.rawValue),
                                              style: .plain,
                                              target: self,
                                              action: #selector(applyFilters))
@@ -91,10 +96,36 @@ class FilterLaunchesViewController: UIViewController {
 
   @objc private func applyFilters() {
     guard let launchViewModels = launchViewModels else { return }
-    let launchesFilterApplicator = LaunchesFilterApplicator(filters: selectedFilters,
-                                                            launchViewModels: launchViewModels)
-    updateLaunches?(launchesFilterApplicator.apply())
+    let filterApplicator = LaunchesFilterApplicator(filters: selectedFilters, launchViewModels: launchViewModels)
+    updateLaunches?(filterApplicator.apply())
     dismissViewController()
+  }
+
+}
+
+extension FilterLaunchesViewController: UITableViewDataSource {
+
+  func tableView(_ tableView: UITableView,
+                 numberOfRowsInSection section: Int) -> Int {
+    sections[section].numberOfRows
+  }
+
+  func numberOfSections(in tableView: UITableView) -> Int {
+    sections.count
+  }
+
+  func tableView(_ tableView: UITableView,
+                 titleForHeaderInSection section: Int) -> String? {
+    sections[section].title
+  }
+
+  func tableView(_ tableView: UITableView,
+                 cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    let cell = tableView.dequeueReusableCell(withIdentifier: FilterTableViewCell.identifier, for: indexPath) as! FilterTableViewCell
+    let row = sections[indexPath.section].rows[indexPath.row]
+    cell.accessoryType = row.selected ? .checkmark : .none
+    cell.configure(row: row)
+    return cell
   }
 
 }
@@ -147,29 +178,11 @@ extension FilterLaunchesViewController: UITableViewDelegate {
 
 }
 
-extension FilterLaunchesViewController: UITableViewDataSource {
-
-  func tableView(_ tableView: UITableView,
-                 numberOfRowsInSection section: Int) -> Int {
-    sections[section].numberOfRows
+private extension FilterLaunchesViewController {
+  enum Constants: String {
+    case title = "Filter Launches"
+    case launchSuccess = "Launch Success"
+    case launchYears = "Launch Years"
+    case sort = "Sort"
   }
-
-  func numberOfSections(in tableView: UITableView) -> Int {
-    sections.count
-  }
-
-  func tableView(_ tableView: UITableView,
-                 titleForHeaderInSection section: Int) -> String? {
-    sections[section].title
-  }
-
-  func tableView(_ tableView: UITableView,
-                 cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCell(withIdentifier: FilterTableViewCell.identifier, for: indexPath) as! FilterTableViewCell
-    let row = sections[indexPath.section].rows[indexPath.row]
-    cell.accessoryType = row.selected ? .checkmark : .none
-    cell.configure(row: row)
-    return cell
-  }
-
 }

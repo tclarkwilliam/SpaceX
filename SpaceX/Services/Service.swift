@@ -7,11 +7,6 @@
 
 import Foundation
 
-enum ServiceError: Error {
-  case invalidData
-  case invalidURL
-}
-
 class Service {
 
   private let session: URLSession
@@ -37,3 +32,7 @@ extension Service {
   }
 }
 
+enum ServiceError: Error {
+  case invalidData
+  case invalidURL
+}

@@ -59,7 +59,8 @@ struct LaunchViewModel {
   }
 
   var launchImage: UIImage? {
-    isLaunchSuccessfull ? UIImage(systemName: "checkmark") : UIImage(systemName: "xmark")
+    isLaunchSuccessfull ? UIImage(systemName: GlobalConstants.checkmarkSymbol.rawValue) :
+                          UIImage(systemName: GlobalConstants.crossSymbol.rawValue)
   }
 
   var launchImageTintColour: UIColor {
@@ -87,6 +88,7 @@ struct LaunchViewModel {
                                     to: end).day ?? 0
   }
 
+  // Make lazy or similar
   private let dateFormatter: DateFormatter = {
     let dateFormatter = DateFormatter()
     dateFormatter.dateStyle = .long

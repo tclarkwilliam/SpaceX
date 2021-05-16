@@ -23,8 +23,4 @@ struct TableViewSection {
     rows.count
   }
 
-  mutating func updateRows<T>(_ rowsss: [ValueRow<T>]) {
-    rows = rowsss
-  }
-
 }

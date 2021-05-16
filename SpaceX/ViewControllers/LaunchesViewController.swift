@@ -11,10 +11,6 @@ class LaunchesViewController: UIViewController {
 
   @IBOutlet weak private var launchesTableView: UITableView!
 
-  private enum Constants: String {
-    case title = "SpaceX"
-  }
-
   private lazy var sections = [TableViewSection]()
   private var launchViewModels: [LaunchViewModel]?
 
@@ -23,37 +19,6 @@ class LaunchesViewController: UIViewController {
     title = Constants.title.rawValue
     configureTableView()
     fetchCompanyInfo()
-  }
-
-  private func configureFilter() {
-    let image = UIImage(systemName: "line.horizontal.3.decrease.circle")
-    navigationItem.rightBarButtonItem = .init(image: image,
-                                              style: .plain,
-                                              target: self,
-                                              action: #selector(filter))
-  }
-
-  @objc private func filter() {
-    let identifier = FilterLaunchesViewController.identifier
-    guard let viewController = storyboard?.instantiateViewController(withIdentifier: identifier) as? FilterLaunchesViewController else { return }
-    viewController.updateLaunches = { launchViewModels in
-      //TODO: don't create new section, update viewModels
-      let rows: [ValueRow<LaunchViewModel>] = launchViewModels.compactMap { vm in
-        let row = ValueRow<LaunchViewModel>()
-        row.value = vm
-        return row
-      }
-      let launchesSection = TableViewSection(title: "LAUNCHES",
-                                             rows: rows)
-      self.sections.remove(at: 1)
-      self.updateSection(launchesSection)
-      let indexPath = IndexPath(row: 0, section: 0)
-      self.launchesTableView.scrollToRow(at: indexPath, at: .top, animated: false)
-    }
-    viewController.launchViewModels = launchViewModels
-    let navigationController = UINavigationController(rootViewController: viewController)
-    navigationController.navigationBar.tintColor = .black
-    present(navigationController, animated: true)
   }
 
   private func configureTableView() {
@@ -76,8 +41,7 @@ class LaunchesViewController: UIViewController {
         let companyInfoViewModel = CompanyInfoViewModel(companyInfo: companyInfo)
         let row = ValueRow<CompanyInfoViewModel>()
         row.value = companyInfoViewModel
-        let companySection = TableViewSection(title: "COMPANY",
-                                              rows: [row])
+        let companySection = TableViewSection(title: Constants.company.rawValue, rows: [row])
         self.updateSection(companySection)
         self.fetchLaunches()
       case .failure(let error):
@@ -96,8 +60,7 @@ class LaunchesViewController: UIViewController {
           row.value = vm
           return row
         }
-        let launchesSection = TableViewSection(title: "LAUNCHES",
-                                               rows: rows)
+        let launchesSection = TableViewSection(title: Constants.launches.rawValue, rows: rows)
         self.updateSection(launchesSection)
         self.launchViewModels = launchViewModels
         self.configureFilter()
@@ -107,28 +70,41 @@ class LaunchesViewController: UIViewController {
     }
   }
 
+  private func configureFilter() {
+    let image = UIImage(systemName: Constants.filterSymbol.rawValue)
+    navigationItem.rightBarButtonItem = .init(image: image,
+                                              style: .plain,
+                                              target: self,
+                                              action: #selector(showFilters))
+  }
+
+  @objc private func showFilters() {
+    let identifier = FilterLaunchesViewController.identifier
+    guard let viewController = storyboard?.instantiateViewController(withIdentifier: identifier) as? FilterLaunchesViewController else { return }
+    viewController.updateLaunches = { launchViewModels in
+      //TODO: don't create new section, update viewModels
+      let rows: [ValueRow<LaunchViewModel>] = launchViewModels.compactMap { vm in
+        let row = ValueRow<LaunchViewModel>()
+        row.value = vm
+        return row
+      }
+      let launchesSection = TableViewSection(title: Constants.launches.rawValue, rows: rows)
+      self.sections.remove(at: 1)
+      self.updateSection(launchesSection)
+      let indexPath = IndexPath(row: 0, section: 0)
+      self.launchesTableView.scrollToRow(at: indexPath, at: .top, animated: false)
+    }
+    viewController.launchViewModels = launchViewModels
+    let navigationController = UINavigationController(rootViewController: viewController)
+    navigationController.navigationBar.tintColor = .black
+    present(navigationController, animated: true)
+  }
+
   private func updateSection(_ section: TableViewSection) {
     sections.insert(section, at: self.sections.count)
     launchesTableView.reloadData()
   }
   
-}
-
-extension LaunchesViewController: UITableViewDelegate {
-
-  func tableView(_ tableView: UITableView,
-                 didSelectRowAt indexPath: IndexPath) {
-    guard let row = sections[indexPath.section].rows[indexPath.row] as? ValueRow<LaunchViewModel> else { return }
-    presentLinkOptions(launchViewModel: row.value)
-  }
-
-  private func presentLinkOptions(launchViewModel: LaunchViewModel?) {
-    guard let viewController = storyboard?.instantiateViewController(withIdentifier: LinkOptionsViewController.identifier) as? LinkOptionsViewController else { return }
-    viewController.launchViewModel = launchViewModel
-    let activityViewController = ActivityViewController(childViewController: viewController)
-    present(activityViewController, animated: true)
-  }
-
 }
 
 extension LaunchesViewController: UITableViewDataSource {
@@ -165,4 +141,30 @@ extension LaunchesViewController: UITableViewDataSource {
     return UITableViewCell()
   }
 
+}
+
+extension LaunchesViewController: UITableViewDelegate {
+
+  func tableView(_ tableView: UITableView,
+                 didSelectRowAt indexPath: IndexPath) {
+    guard let row = sections[indexPath.section].rows[indexPath.row] as? ValueRow<LaunchViewModel> else { return }
+    presentLinkOptions(launchViewModel: row.value)
+  }
+
+  private func presentLinkOptions(launchViewModel: LaunchViewModel?) {
+    guard let viewController = storyboard?.instantiateViewController(withIdentifier: LinkOptionsViewController.identifier) as? LinkOptionsViewController else { return }
+    viewController.launchViewModel = launchViewModel
+    let activityViewController = ActivityViewController(childViewController: viewController)
+    present(activityViewController, animated: true)
+  }
+
+}
+
+private extension LaunchesViewController {
+  enum Constants: String {
+    case title = "SpaceX"
+    case company = "COMPANY"
+    case launches = "LAUNCHES"
+    case filterSymbol = "line.horizontal.3.decrease.circle"
+  }
 }

@@ -48,6 +48,7 @@
 		4780E9FB264472D20027D12B /* CompanyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4780E9FA264472D20027D12B /* CompanyTableViewCell.swift */; };
 		4782D8B6265013B100E0229E /* ImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4782D8B5265013B100E0229E /* ImageService.swift */; };
 		4782D8C3265092CB00E0229E /* CachedImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4782D8C2265092CB00E0229E /* CachedImage.swift */; };
+		4782D8C8265114D900E0229E /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4782D8C7265114D900E0229E /* Constants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -115,6 +116,7 @@
 		4780E9FA264472D20027D12B /* CompanyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyTableViewCell.swift; sourceTree = "<group>"; };
 		4782D8B5265013B100E0229E /* ImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageService.swift; sourceTree = "<group>"; };
 		4782D8C2265092CB00E0229E /* CachedImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CachedImage.swift; sourceTree = "<group>"; };
+		4782D8C7265114D900E0229E /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -199,6 +201,7 @@
 				47692407264520F500E47A7E /* Row.swift */,
 				476923FF264520E500E47A7E /* TableViewSection.swift */,
 				4782D8C2265092CB00E0229E /* CachedImage.swift */,
+				4782D8C7265114D900E0229E /* Constants.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -456,6 +459,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4782D8C8265114D900E0229E /* Constants.swift in Sources */,
 				4769243626458AEE00E47A7E /* Launch.swift in Sources */,
 				473A68DC264B1CDE00D8A14B /* FilterLaunchesViewController.swift in Sources */,
 				476924162645487000E47A7E /* CompanyInfoService.swift in Sources */,

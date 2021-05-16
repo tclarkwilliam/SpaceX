@@ -24,7 +24,7 @@ class Cache<V> where V: Codable {
       let data = try JSONEncoder().encode(value)
       try data.write(to: fileURL)
     } catch {
-      print("ERROR: \(error)")
+      print("Handle error: \(error)")
     }
   }
 
@@ -34,7 +34,7 @@ class Cache<V> where V: Codable {
       let data = try Data(contentsOf: fileURL)
       return try JSONDecoder().decode(V.self, from: data)
     } catch {
-      print("ERROR: \(error)")
+      print("Handle error: \(error)")
       return nil
     }
   }

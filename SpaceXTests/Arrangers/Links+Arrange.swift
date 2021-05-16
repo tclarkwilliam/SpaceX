@@ -11,9 +11,9 @@ import Foundation
 
 extension Links {
   static func arrange() -> Links {
-    .init(missionImagePath: "",
-          article: "",
-          wikipedia: "",
-          video: "")
+    .init(missionImagePath: "image/path",
+          article: "article/path",
+          wikipedia: "wikipedia/path",
+          video: "video/path")
   }
 }

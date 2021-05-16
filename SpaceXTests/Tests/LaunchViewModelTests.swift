@@ -49,12 +49,12 @@ class LaunchViewModelTests: XCTestCase {
   }
 
   func test_launchImageTintColour_successfullLaunch_returnsGreen() {
-    XCTAssertEqual(subject.launchImageTintColour, .green)
+    XCTAssertEqual(subject.launchImageTintColour, .systemGreen)
   }
 
   func test_launchImageTintColour_unsuccessfullLaunch_returnsRed() {
     subject = LaunchViewModel(launch: .arrange(launchSuccess: false))
-    XCTAssertEqual(subject.launchImageTintColour, .red)
+    XCTAssertEqual(subject.launchImageTintColour, .systemRed)
   }
 
   func test_launchDateDaysPrefix_past_returnsSince() {
@@ -69,6 +69,26 @@ class LaunchViewModelTests: XCTestCase {
   func test_launchDateDays_returnsLaunchDateDays() {
     let oneDayInSeconds: TimeInterval = 86400
     XCTAssertEqual(subject.launchDateDays(date: .init(timeIntervalSince1970: oneDayInSeconds)), "1")
+  }
+
+  func test_missionImagePath_returnsMissionImagePath() {
+    XCTAssertEqual(subject.missionImagePath, "image/path")
+  }
+
+  func test_articleURL_returnsArticleURL() {
+    XCTAssertEqual(subject.articleURL, URL(string: "article/path"))
+  }
+
+  func test_wikipediaURL_returnsWikipediaURL() {
+    XCTAssertEqual(subject.wikipediaURL, URL(string: "wikipedia/path"))
+  }
+
+  func test_videoURL_returnsVideoURL() {
+    XCTAssertEqual(subject.videoURL, URL(string: "video/path"))
+  }
+
+  func test_launchYear_returnsLaunchYear() {
+    XCTAssertEqual(subject.launchYear, 1970)
   }
 
 }

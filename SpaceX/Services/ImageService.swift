@@ -42,10 +42,12 @@ class ImageService {
 
 }
 
-private enum Constants: String {
-  case scheme = "https://"
-  case slash = "/"
-  case underscore = "_"
-  case png = ".png"
-  case empty = ""
+private extension ImageService {
+  enum Constants: String {
+    case scheme = "https://"
+    case slash = "/"
+    case underscore = "_"
+    case png = ".png"
+    case empty = ""
+  }
 }
