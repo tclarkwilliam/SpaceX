@@ -25,7 +25,7 @@ struct LaunchViewModel {
 
   func fetchMissionImage(completion: @escaping ((UIImage?) -> Void)) {
     guard let path = missionImagePath else { return }
-    ImageService().fetchMissionImage(path: path) { result in
+    ImageService(path: path).fetchMissionImage() { result in
       guard case let .success(image) = result else { return }
       completion(image)
     }

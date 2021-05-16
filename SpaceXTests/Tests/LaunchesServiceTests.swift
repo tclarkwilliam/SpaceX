@@ -11,7 +11,6 @@ import XCTest
 
 class LaunchesServiceTests: XCTestCase {
 
-  private var subject: LaunchesService!
   private var mockService: MockService!
 
   override func setUp() {
@@ -21,14 +20,13 @@ class LaunchesServiceTests: XCTestCase {
 
   override func tearDown() {
     mockService = nil
-    subject = nil
     super.tearDown()
   }
 
   func test_fetchLaunches_success_returnsLaunches() {
     let launches = launchesDictionary(isValidData: true)
     mockService.data = try? JSONSerialization.data(withJSONObject: [launches], options: [])
-    subject = LaunchesService(service: mockService)
+    let subject = LaunchesService(service: mockService)
     subject.fetchLaunches { result in
       guard case .success(let launches) = result else { return XCTFail("Result should be success") }
       XCTAssertNotNil(launches)
@@ -38,7 +36,7 @@ class LaunchesServiceTests: XCTestCase {
   func test_fetchLaunches_failure_returnsError() {
     let launches = launchesDictionary(isValidData: false)
     mockService.data = try? JSONSerialization.data(withJSONObject: [launches], options: [])
-    subject = LaunchesService(service: mockService)
+    let subject = LaunchesService(service: mockService)
     subject.fetchLaunches { result in
       guard case .failure(let error) = result else { return XCTFail("Result should be failure") }
       XCTAssertNotNil(error)
@@ -47,7 +45,7 @@ class LaunchesServiceTests: XCTestCase {
 
   func test_fetchLaunches_invalidData_returnsError() {
     mockService.data = nil
-    subject = LaunchesService(service: mockService)
+    let subject = LaunchesService(service: mockService)
     subject.fetchLaunches { result in
       guard case .failure(let error) = result else { return XCTFail("Result should be failure") }
       XCTAssertNotNil(error)

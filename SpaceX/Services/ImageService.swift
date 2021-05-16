@@ -9,31 +9,34 @@ import UIKit
 
 class ImageService {
 
-  private let service: Service
+  lazy var cache = Cache<CachedImage>(directory: CachePath.images.rawValue,
+                                      filename: imageCacheName)
 
-  init(service: Service = Service()) {
+  private let service: Service
+  private let path: String
+
+  init(service: Service = Service(),
+       path: String) {
     self.service = service
+    self.path = path
   }
 
-  func fetchMissionImage(path: String,
-                         completion: @escaping (Result<UIImage?, Error>) -> Void) {
-    let cache = Cache<CachedImage>(directory: CachePath.images.rawValue,
-                                   filename: imageCacheName(path))
+  func fetchMissionImage(completion: @escaping (Result<UIImage?, Error>) -> Void) {
     if let data = cache.retrieve?.data {
       completion(.success(UIImage(data: data)))
       print("CACHED")
     } else {
       guard let url = URL(string: path) else { return completion(.failure(ServiceError.invalidURL)) }
-      Service().fetch(url: url) { data, response, error in
+      service.fetch(url: url) { data, response, error in
         guard let data = data else { return completion(.failure(ServiceError.invalidData)) }
-        cache.save(CachedImage(data: data))
+        self.cache.save(CachedImage(data: data))
         completion(.success(UIImage(data: data)))
         print("FETCHED")
       }
     }
   }
 
-  private func imageCacheName(_ path: String) -> String {
+  private var imageCacheName: String {
     return path
       .replacingOccurrences(of: Constants.scheme.rawValue, with: Constants.empty.rawValue)
       .replacingOccurrences(of: Constants.slash.rawValue, with: Constants.underscore.rawValue)
