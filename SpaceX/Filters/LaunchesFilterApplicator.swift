@@ -25,8 +25,7 @@ class LaunchesFilterApplicator {
       filteredLaunchViewModels = filteredLaunchViewModels.filter { filteredLaunchYears.contains($0.launchYear) }
     }
     if let filteredSortOrder = filteredSortOrder {
-      let isAscending = filteredSortOrder.isAscending
-      filteredLaunchViewModels.sort { isAscending ? $0.launchYear < $1.launchYear : $0.launchYear > $1.launchYear }
+      filteredLaunchViewModels.sort { filteredSortOrder.isAscending ? $0.launchYear < $1.launchYear : $0.launchYear > $1.launchYear }
     }
     return filters.isEmpty ? launchViewModels : filteredLaunchViewModels
   }
@@ -44,38 +43,6 @@ class LaunchesFilterApplicator {
   private var filteredSortOrder: SortOrder? {
     let sortOrderRows = filters.filter { $0 is ValueRow<SortOrder> } as? [ValueRow<SortOrder>]
     return sortOrderRows?.compactMap { $0.value }.first
-  }
-
-}
-
-enum LaunchOutcome: String {
-
-  case success = "Success"
-  case failure = "Failure"
-
-  var isSuccess: Bool {
-    switch self {
-    case .success:
-      return true
-    case .failure:
-      return false
-    }
-  }
-
-}
-
-enum SortOrder: String {
-
-  case ascending = "Ascending"
-  case descending = "Descending"
-
-  var isAscending: Bool {
-    switch self {
-    case .ascending:
-      return true
-    case .descending:
-      return false
-    }
   }
 
 }

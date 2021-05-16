@@ -27,8 +27,7 @@ class LinkOptionsViewController: UIViewController {
 
   private func presentSafariViewController(url: URL?) {
     guard let url = url else { return }
-    let safariViewController = SFSafariViewController(url: url)
-    present(safariViewController, animated: true)
+    present(SFSafariViewController(url: url), animated: true)
   }
 
 }

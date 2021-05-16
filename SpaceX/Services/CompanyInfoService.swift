@@ -18,6 +18,7 @@ class CompanyInfoService {
   }
 
   func fetchInfo(completion: @escaping Completion) {
+    guard let url = url else { return }
     service.fetch(url: url) { data, response, error in
       self.handleResponse(data: data, completion: completion)
     }
@@ -34,8 +35,8 @@ class CompanyInfoService {
     }
   }
 
-  private var url: URL {
-    URL(string: "\(Service.Constants.baseURL.rawValue)\(Constants.path.rawValue)")!
+  private var url: URL? {
+    URL(string: "\(Service.Constants.baseURL.rawValue)\(Constants.path.rawValue)")
   }
 
 }

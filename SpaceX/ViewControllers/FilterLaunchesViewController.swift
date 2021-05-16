@@ -11,13 +11,13 @@ class FilterLaunchesViewController: UIViewController {
 
   @IBOutlet weak var filterTableView: UITableView!
 
-  var launchViewModels: [LaunchViewModel]?
-  var updateLaunches: (([LaunchViewModel]) -> Void)?
-  
-  private var selectedFilters: [Row] = [Row]()
-  private lazy var sections = [TableViewSection]()
-
   static let identifier = String(describing: FilterLaunchesViewController.self)
+
+  var launchViewModels: [LaunchViewModel]!
+  var updateLaunches: (([LaunchViewModel]) -> Void)?
+
+  private var selectedFilters = [Row]()
+  private lazy var sections = [TableViewSection]()
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -75,7 +75,7 @@ class FilterLaunchesViewController: UIViewController {
   }
 
   private var launchYearRow: [ValueRow<Int>] {
-    let launchYears = launchViewModels!.map { $0.launchYear }
+    let launchYears = launchViewModels.map { $0.launchYear }
     var uniqueYears = Array(Set(launchYears))
     uniqueYears.sort()
     return uniqueYears.compactMap { year in
@@ -96,7 +96,6 @@ class FilterLaunchesViewController: UIViewController {
   }
 
   @objc private func applyFilters() {
-    guard let launchViewModels = launchViewModels else { return }
     let filterApplicator = LaunchesFilterApplicator(filters: selectedFilters, launchViewModels: launchViewModels)
     updateLaunches?(filterApplicator.apply())
     dismissViewController()
