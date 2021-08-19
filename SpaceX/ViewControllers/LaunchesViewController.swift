@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 class LaunchesViewController: UIViewController {
 
@@ -37,9 +38,13 @@ class LaunchesViewController: UIViewController {
 
   private func fetchCompanyInfo() {
     CompanyInfoService().fetchInfo { result in
-      guard case let .success(companyInfo) = result else { return }
-      self.configureCompanyInfoSection(from: companyInfo)
-      self.fetchLaunches()
+      switch result {
+      case .success(let companyInfo):
+        self.configureCompanyInfoSection(from: companyInfo)
+        self.fetchLaunches()
+      case .failure(let error):
+        self.showError(error)
+      }
     }
   }
 
@@ -58,10 +63,22 @@ class LaunchesViewController: UIViewController {
 
   private func fetchLaunches() {
     LaunchesService().fetchLaunches { result in
-      guard case let .success(launches) = result else { return }
-      self.configureLaunchesSection(from: launches)
-      self.configureFilter()
+      switch result {
+      case .success(let launches):
+        self.configureLaunchesSection(from: launches)
+        self.configureFilter()
+      case .failure(let error):
+        self.showError(error)
+      }
     }
+  }
+
+  private func showError(_ error: Error) {
+    let hostingController = UIHostingController(rootView: LaunchesErrorView())
+    addChild(hostingController)
+    hostingController.view.frame = view.bounds
+    view.addSubview(hostingController.view)
+    hostingController.didMove(toParent: self)
   }
 
   private func configureLaunchesSection(from launches: [Launch]) {
@@ -89,13 +106,19 @@ class LaunchesViewController: UIViewController {
   }
 
   @objc private func showFilters() {
-    let identifier = FilterLaunchesViewController.identifier
-    guard let viewController = storyboard?.instantiateViewController(withIdentifier: identifier) as? FilterLaunchesViewController else { return }
+    guard let viewController = filterLaunchesViewController() else { return }
     viewController.updateLaunches = { self.updateLaunchesSection(with: $0) }
-    viewController.launchViewModels = launchViewModels
     let navigationController = UINavigationController(rootViewController: viewController)
     navigationController.navigationBar.tintColor = .black
     present(navigationController, animated: true)
+  }
+
+  private func filterLaunchesViewController() -> FilterLaunchesViewController? {
+    guard let launchViewModels = launchViewModels else { return nil }
+    return storyboard?.instantiateViewController(identifier: FilterLaunchesViewController.identifier,
+                                                 creator: { coder -> FilterLaunchesViewController? in
+                                                  FilterLaunchesViewController(coder: coder, launchViewModels: launchViewModels)
+                                                 })
   }
 
   private func updateLaunchesSection(with launchViewModels: [LaunchViewModel]) {
@@ -160,7 +183,13 @@ extension LaunchesViewController: UITableViewDataSource {
                                                 for: indexPath) as? LaunchTableViewCell,
        let row = sections[indexPath.section].rows[indexPath.row] as? ValueRow<LaunchViewModel>,
        let viewModel = row.value {
+      cell.tag = indexPath.row
       cell.configure(viewModel: viewModel)
+      viewModel.fetchMissionImage { image in
+        if cell.tag == indexPath.row {
+          cell.configureImage(image)
+        }
+      }
       return cell
     }
     return nil

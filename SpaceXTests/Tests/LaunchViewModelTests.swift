@@ -35,24 +35,24 @@ class LaunchViewModelTests: XCTestCase {
     XCTAssertEqual(subject.launchDate, "January 1, 1970 at 1:00:00 AM GMT+1")
   }
 
-  func test_isLaunchSuccessfull_returnsIsLaunchSuccessfull() {
-    XCTAssertTrue(subject.isLaunchSuccessfull)
+  func test_isLaunchSuccessful_returnsIsLaunchSuccessful() {
+    XCTAssertTrue(subject.isLaunchSuccessful)
   }
 
-  func test_launchImage_successfullLaunch_returnsCheckmarkImage() {
+  func test_launchImage_successfulLaunch_returnsCheckmarkImage() {
     XCTAssertEqual(subject.launchImage, UIImage(systemName: "checkmark"))
   }
 
-  func test_launchImage_unsuccessfullLaunch_returnsXmarkImage() {
+  func test_launchImage_unsuccessfulLaunch_returnsXmarkImage() {
     subject = LaunchViewModel(launch: .arrange(launchSuccess: false))
     XCTAssertEqual(subject.launchImage, UIImage(systemName: "xmark"))
   }
 
-  func test_launchImageTintColour_successfullLaunch_returnsGreen() {
+  func test_launchImageTintColour_successfulLaunch_returnsGreen() {
     XCTAssertEqual(subject.launchImageTintColour, .systemGreen)
   }
 
-  func test_launchImageTintColour_unsuccessfullLaunch_returnsRed() {
+  func test_launchImageTintColour_unsuccessfulLaunch_returnsRed() {
     subject = LaunchViewModel(launch: .arrange(launchSuccess: false))
     XCTAssertEqual(subject.launchImageTintColour, .systemRed)
   }

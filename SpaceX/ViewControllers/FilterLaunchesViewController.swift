@@ -9,15 +9,25 @@ import UIKit
 
 class FilterLaunchesViewController: UIViewController {
 
-  @IBOutlet weak var filterTableView: UITableView!
+  @IBOutlet weak private var filterTableView: UITableView!
 
   static let identifier = String(describing: FilterLaunchesViewController.self)
 
-  var launchViewModels: [LaunchViewModel]!
   var updateLaunches: (([LaunchViewModel]) -> Void)?
 
   private var selectedFilters = [Row]()
   private lazy var sections = [TableViewSection]()
+
+  private let launchViewModels: [LaunchViewModel]
+
+  init?(coder: NSCoder, launchViewModels: [LaunchViewModel]) {
+    self.launchViewModels = launchViewModels
+    super.init(coder: coder)
+  }
+
+  required init?(coder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
 
   override func viewDidLoad() {
     super.viewDidLoad()

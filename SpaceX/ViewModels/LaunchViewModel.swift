@@ -54,17 +54,17 @@ struct LaunchViewModel {
     Self.dateFormatter.string(from: launch.date)
   }
 
-  var isLaunchSuccessfull: Bool {
+  var isLaunchSuccessful: Bool {
     launch.launchSuccess ?? false
   }
 
   var launchImage: UIImage? {
-    isLaunchSuccessfull ? UIImage(systemName: GlobalConstants.checkmarkSymbol.rawValue) :
-                          UIImage(systemName: GlobalConstants.crossSymbol.rawValue)
+    let imageName: GlobalConstants = isLaunchSuccessful ? .checkmarkSymbol : .crossSymbol
+    return UIImage(systemName: imageName.rawValue)
   }
 
   var launchImageTintColour: UIColor {
-    isLaunchSuccessfull ? .systemGreen : .systemRed
+    isLaunchSuccessful ? .systemGreen : .systemRed
   }
 
   var launchDateDaysPrefix: String {

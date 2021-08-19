@@ -19,7 +19,7 @@ class LaunchesFilterApplicator {
   func apply() -> [LaunchViewModel] {
     var filteredLaunchViewModels = launchViewModels
     if let launchOutcome = launchOutcome {
-      filteredLaunchViewModels = filteredLaunchViewModels.filter { $0.isLaunchSuccessfull == launchOutcome.isSuccess }
+      filteredLaunchViewModels = filteredLaunchViewModels.filter { $0.isLaunchSuccessful == launchOutcome.isSuccess }
     }
     if let filteredLaunchYears = filteredLaunchYears, !filteredLaunchYears.isEmpty {
       filteredLaunchViewModels = filteredLaunchViewModels.filter { filteredLaunchYears.contains($0.launchYear) }

@@ -20,7 +20,7 @@ class LaunchTableViewCell: UITableViewCell {
   @IBOutlet weak private var outcomeImageView: UIImageView!
 
   func configure(viewModel: LaunchViewModel) {
-    viewModel.fetchMissionImage { self.missionImageView.image = $0 }
+    configureImage(nil)
     missionLabel.text = viewModel.missionName
     rocketLabel.text = viewModel.formattedRocket
     dateLabel.text = viewModel.launchDate
@@ -28,6 +28,10 @@ class LaunchTableViewCell: UITableViewCell {
     daysLabel.text = viewModel.launchDateDays()
     outcomeImageView.image = viewModel.launchImage
     outcomeImageView.tintColor = viewModel.launchImageTintColour
+  }
+
+  func configureImage(_ image: UIImage?) {
+    missionImageView.image = image
   }
   
 }
