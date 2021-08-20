@@ -12,7 +12,7 @@ class LaunchesViewController: UIViewController {
 
   @IBOutlet weak private var launchesTableView: UITableView!
 
-  private lazy var sections = [TableViewSection]()
+  private var sections = [TableViewSection]()
   private var launchesSection: TableViewSection?
   private var launchViewModels: [LaunchViewModel]?
 
@@ -117,7 +117,7 @@ class LaunchesViewController: UIViewController {
     guard let launchViewModels = launchViewModels else { return nil }
     return storyboard?.instantiateViewController(identifier: FilterLaunchesViewController.identifier,
                                                  creator: { coder -> FilterLaunchesViewController? in
-                                                  FilterLaunchesViewController(coder: coder, launchViewModels: launchViewModels)
+      FilterLaunchesViewController(coder: coder, launchViewModels: launchViewModels)
                                                  })
   }
 
@@ -125,14 +125,28 @@ class LaunchesViewController: UIViewController {
     self.launchesSection?.updateRows(self.launchRows(from: launchViewModels))
     self.sections.remove(at: self.sections.count - 1)
     self.updateSection(self.launchesSection)
-    let indexPath = IndexPath(row: 0, section: 0)
-    self.launchesTableView.scrollToRow(at: indexPath, at: .top, animated: false)
+    scrollToTop()
   }
 
   private func updateSection(_ section: TableViewSection?) {
     guard let section = section else { return }
     sections.insert(section, at: self.sections.count)
     launchesTableView.reloadData()
+  }
+
+  private func scrollToTop() {
+    self.launchesTableView.scrollToRow(at: IndexPath(row: 0, section: 0),
+                                       at: .top,
+                                       animated: false)
+  }
+
+  private func fetchMissionImage(viewModel: LaunchViewModel,
+                                 completion: @escaping ((UIImage?) -> Void)) {
+    guard let imagePath = viewModel.missionImagePath else { return }
+    ImageService(path: imagePath).fetchMissionImage { result in
+      guard case let .success(image) = result else { return }
+      completion(image)
+    }
   }
   
 }
@@ -185,7 +199,7 @@ extension LaunchesViewController: UITableViewDataSource {
        let viewModel = row.value {
       cell.tag = indexPath.row
       cell.configure(viewModel: viewModel)
-      viewModel.fetchMissionImage { image in
+      fetchMissionImage(viewModel: viewModel) { image in
         if cell.tag == indexPath.row {
           cell.configureImage(image)
         }

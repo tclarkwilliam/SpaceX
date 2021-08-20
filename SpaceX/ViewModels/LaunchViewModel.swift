@@ -23,14 +23,6 @@ struct LaunchViewModel {
     "\(launch.rocket.name) / \(launch.rocket.type)"
   }
 
-  func fetchMissionImage(completion: @escaping ((UIImage?) -> Void)) {
-    guard let path = missionImagePath else { return }
-    ImageService(path: path).fetchMissionImage() { result in
-      guard case let .success(image) = result else { return }
-      completion(image)
-    }
-  }
-
   var missionImagePath: String? {
     launch.links.missionImagePath
   }

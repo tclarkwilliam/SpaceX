@@ -11,9 +11,9 @@ struct TableViewSection {
   let allowsMultipleSelection: Bool
   private(set) var rows: [Row]
 
-  public init(title: String,
-              allowsMultipleSelection: Bool = false,
-              rows: [Row]) {
+  init(title: String,
+       allowsMultipleSelection: Bool = false,
+       rows: [Row]) {
     self.title = title
     self.allowsMultipleSelection = allowsMultipleSelection
     self.rows = rows

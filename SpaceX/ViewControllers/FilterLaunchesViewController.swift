@@ -16,7 +16,7 @@ class FilterLaunchesViewController: UIViewController {
   var updateLaunches: (([LaunchViewModel]) -> Void)?
 
   private var selectedFilters = [Row]()
-  private lazy var sections = [TableViewSection]()
+  private var sections = [TableViewSection]()
 
   private let launchViewModels: [LaunchViewModel]
 
