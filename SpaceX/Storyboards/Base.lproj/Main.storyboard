@@ -20,19 +20,28 @@
                                 <rect key="frame" x="0.0" y="88" width="414" height="774"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yem-7v-qkr" customClass="LaunchesStateView" customModule="SpaceX" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="yem-7v-qkr" secondAttribute="trailing" id="GJR-Uc-gKm"/>
+                            <constraint firstItem="yem-7v-qkr" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="Sru-hl-DfR"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="yem-7v-qkr" secondAttribute="bottom" id="VUm-uo-QhC"/>
                             <constraint firstItem="vYx-ut-OZt" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="kEB-2F-Ipy"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="vYx-ut-OZt" secondAttribute="bottom" id="kyM-kd-mQb"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="vYx-ut-OZt" secondAttribute="trailing" id="nKp-GZ-RI3"/>
                             <constraint firstItem="vYx-ut-OZt" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="ufY-YJ-dDi"/>
+                            <constraint firstItem="yem-7v-qkr" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="vkr-tr-2v9"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Lju-Qp-a0h"/>
                     <connections>
                         <outlet property="launchesTableView" destination="vYx-ut-OZt" id="SET-hU-0cd"/>
+                        <outlet property="stateView" destination="yem-7v-qkr" id="RFJ-T7-H6k"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

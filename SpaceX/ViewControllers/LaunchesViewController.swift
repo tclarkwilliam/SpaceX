@@ -6,11 +6,11 @@
 //
 
 import UIKit
-import SwiftUI
 
 class LaunchesViewController: UIViewController {
 
   @IBOutlet weak private var launchesTableView: UITableView!
+  @IBOutlet weak private var stateView: LaunchesStateView!
 
   private var sections = [TableViewSection]()
   private var launchesSection: TableViewSection?
@@ -37,13 +37,14 @@ class LaunchesViewController: UIViewController {
   }
 
   private func fetchCompanyInfo() {
+    showLoading()
     CompanyInfoService().fetchInfo { result in
       switch result {
       case .success(let companyInfo):
         self.configureCompanyInfoSection(from: companyInfo)
         self.fetchLaunches()
-      case .failure(let error):
-        self.showError(error)
+      case .failure(_):
+        self.showError()
       }
     }
   }
@@ -67,18 +68,11 @@ class LaunchesViewController: UIViewController {
       case .success(let launches):
         self.configureLaunchesSection(from: launches)
         self.configureFilter()
-      case .failure(let error):
-        self.showError(error)
+        self.showLaunches()
+      case .failure(_):
+        self.showError()
       }
     }
-  }
-
-  private func showError(_ error: Error) {
-    let hostingController = UIHostingController(rootView: LaunchesErrorView())
-    addChild(hostingController)
-    hostingController.view.frame = view.bounds
-    view.addSubview(hostingController.view)
-    hostingController.didMove(toParent: self)
   }
 
   private func configureLaunchesSection(from launches: [Launch]) {
@@ -97,15 +91,27 @@ class LaunchesViewController: UIViewController {
     }
   }
 
+  private func showLoading() {
+    stateView.configure(.loading)
+  }
+
+  private func showError() {
+    stateView.configure(.error)
+  }
+
+  private func showLaunches() {
+    stateView.isHidden = true
+  }
+
   private func configureFilter() {
     let image = UIImage(systemName: Constants.filterSymbol.rawValue)
     navigationItem.rightBarButtonItem = .init(image: image,
                                               style: .plain,
                                               target: self,
-                                              action: #selector(showFilters))
+                                              action: #selector(showFilter))
   }
 
-  @objc private func showFilters() {
+  @objc private func showFilter() {
     guard let viewController = filterLaunchesViewController() else { return }
     viewController.updateLaunches = { self.updateLaunchesSection(with: $0) }
     let navigationController = UINavigationController(rootViewController: viewController)
