@@ -20,7 +20,8 @@ class FilterLaunchesViewController: UIViewController {
 
   private let launchViewModels: [LaunchViewModel]
 
-  init?(coder: NSCoder, launchViewModels: [LaunchViewModel]) {
+  init?(coder: NSCoder,
+        launchViewModels: [LaunchViewModel]) {
     self.launchViewModels = launchViewModels
     super.init(coder: coder)
   }
@@ -65,7 +66,6 @@ class FilterLaunchesViewController: UIViewController {
     let nib = UINib(nibName: FilterTableViewCell.identifier, bundle: nil)
     filterTableView.register(nib, forCellReuseIdentifier: FilterTableViewCell.identifier)
   }
-
 
   private func configureLaunchSuccessSection() {
     let successRow = ValueRow<LaunchOutcome>(title: LaunchOutcome.success.rawValue)

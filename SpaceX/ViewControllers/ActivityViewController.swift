@@ -20,6 +20,7 @@ class ActivityViewController: UIActivityViewController {
     super.viewDidLoad()
     addChild(childViewController)
     view.addSubview(childViewController.view)
+    childViewController.didMove(toParent: self)
   }
 
 }

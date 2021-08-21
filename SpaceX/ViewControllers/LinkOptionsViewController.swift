@@ -11,18 +11,28 @@ class LinkOptionsViewController: UIViewController {
 
   static let identifier = String(describing: LinkOptionsViewController.self)
 
-  var launchViewModel: LaunchViewModel?
+  private let launchViewModel: LaunchViewModel
+
+  init?(coder: NSCoder,
+        launchViewModel: LaunchViewModel) {
+    self.launchViewModel = launchViewModel
+    super.init(coder: coder)
+  }
+
+  required init?(coder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
 
   @IBAction func articleButtonSelected() {
-    presentSafariViewController(url: launchViewModel?.articleURL)
+    presentSafariViewController(url: launchViewModel.articleURL)
   }
 
   @IBAction func wikipediaButtonSelected() {
-    presentSafariViewController(url: launchViewModel?.wikipediaURL)
+    presentSafariViewController(url: launchViewModel.wikipediaURL)
   }
 
   @IBAction func videoButtonSelected() {
-    presentSafariViewController(url: launchViewModel?.videoURL)
+    presentSafariViewController(url: launchViewModel.videoURL)
   }
 
   private func presentSafariViewController(url: URL?) {

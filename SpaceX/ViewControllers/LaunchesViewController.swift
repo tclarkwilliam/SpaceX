@@ -128,31 +128,22 @@ class LaunchesViewController: UIViewController {
   }
 
   private func updateLaunchesSection(with launchViewModels: [LaunchViewModel]) {
-    self.launchesSection?.updateRows(self.launchRows(from: launchViewModels))
-    self.sections.remove(at: self.sections.count - 1)
-    self.updateSection(self.launchesSection)
+    launchesSection?.updateRows(launchRows(from: launchViewModels))
+    sections.remove(at: sections.count - 1)
+    updateSection(launchesSection)
     scrollToTop()
   }
 
   private func updateSection(_ section: TableViewSection?) {
     guard let section = section else { return }
-    sections.insert(section, at: self.sections.count)
+    sections.insert(section, at: sections.count)
     launchesTableView.reloadData()
   }
 
   private func scrollToTop() {
-    self.launchesTableView.scrollToRow(at: IndexPath(row: 0, section: 0),
-                                       at: .top,
-                                       animated: false)
-  }
-
-  private func fetchMissionImage(viewModel: LaunchViewModel,
-                                 completion: @escaping ((UIImage?) -> Void)) {
-    guard let imagePath = viewModel.missionImagePath else { return }
-    ImageService(path: imagePath).fetchMissionImage { result in
-      guard case let .success(image) = result else { return }
-      completion(image)
-    }
+    launchesTableView.scrollToRow(at: IndexPath(row: 0, section: 0),
+                                  at: .top,
+                                  animated: false)
   }
   
 }
@@ -175,44 +166,10 @@ extension LaunchesViewController: UITableViewDataSource {
 
   func tableView(_ tableView: UITableView,
                  cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    if let cell = companyCell(tableView: tableView, indexPath: indexPath) {
-      return cell
-    }
-    if let cell = launchCell(tableView: tableView, indexPath: indexPath) {
-      return cell
-    }
-    return UITableViewCell()
-  }
-
-  private func companyCell(tableView: UITableView,
-                           indexPath: IndexPath) -> CompanyTableViewCell? {
-    if let cell = tableView.dequeueReusableCell(withIdentifier: CompanyTableViewCell.identifier,
-                                                for: indexPath) as? CompanyTableViewCell,
-       let row = sections[indexPath.section].rows[indexPath.row] as? ValueRow<CompanyInfoViewModel>,
-       let viewModel = row.value {
-      cell.selectionStyle = .none
-      cell.configure(viewModel: viewModel)
-      return cell
-    }
-    return nil
-  }
-
-  private func launchCell(tableView: UITableView,
-                          indexPath: IndexPath) -> LaunchTableViewCell? {
-    if let cell = tableView.dequeueReusableCell(withIdentifier: LaunchTableViewCell.identifier,
-                                                for: indexPath) as? LaunchTableViewCell,
-       let row = sections[indexPath.section].rows[indexPath.row] as? ValueRow<LaunchViewModel>,
-       let viewModel = row.value {
-      cell.tag = indexPath.row
-      cell.configure(viewModel: viewModel)
-      fetchMissionImage(viewModel: viewModel) { image in
-        if cell.tag == indexPath.row {
-          cell.configureImage(image)
-        }
-      }
-      return cell
-    }
-    return nil
+    let cellConfigurator = LaunchesCellConfigurator(tableView: tableView,
+                                                    sections: sections,
+                                                    indexPath: indexPath)
+    return cellConfigurator.cell()
   }
 
 }
@@ -221,15 +178,20 @@ extension LaunchesViewController: UITableViewDelegate {
 
   func tableView(_ tableView: UITableView,
                  didSelectRowAt indexPath: IndexPath) {
-    guard let row = sections[indexPath.section].rows[indexPath.row] as? ValueRow<LaunchViewModel> else { return }
-    presentLinkOptions(launchViewModel: row.value)
+    guard let row = sections[indexPath.section].rows[indexPath.row] as? ValueRow<LaunchViewModel>,
+          let launchViewModel = row.value,
+          let viewController = linkOptionsViewController(launchViewModel: launchViewModel) else { return }
+    let activityViewController = ActivityViewController(childViewController: viewController)
+    let cell = tableView.cellForRow(at: indexPath)
+    activityViewController.popoverPresentationController?.sourceView = cell
+    present(activityViewController, animated: true)
   }
 
-  private func presentLinkOptions(launchViewModel: LaunchViewModel?) {
-    guard let viewController = storyboard?.instantiateViewController(withIdentifier: LinkOptionsViewController.identifier) as? LinkOptionsViewController else { return }
-    viewController.launchViewModel = launchViewModel
-    let activityViewController = ActivityViewController(childViewController: viewController)
-    present(activityViewController, animated: true)
+  private func linkOptionsViewController(launchViewModel: LaunchViewModel) -> LinkOptionsViewController? {
+    storyboard?.instantiateViewController(identifier: LinkOptionsViewController.identifier,
+                                          creator: { coder -> LinkOptionsViewController? in
+      LinkOptionsViewController(coder: coder, launchViewModel: launchViewModel)
+                                          })
   }
 
 }
