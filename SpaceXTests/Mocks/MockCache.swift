@@ -11,13 +11,14 @@ class MockCache: Cache<CachedImage> {
 
   var savedCalled: Bool = false
 
-  override func save(_ value: CachedImage) {
+  override func save(_ value: CachedImage,
+                     path: String) {
     savedCalled = true
   }
 
   var cachedImage: CachedImage?
-  
-  override var retrieve: CachedImage? {
+
+  override func retrieve(_ path: String) -> CachedImage? {
     cachedImage
   }
 

@@ -11,6 +11,7 @@
 		471AF3DD26CFF31100F48E37 /* LaunchesStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471AF3DC26CFF31100F48E37 /* LaunchesStateView.swift */; };
 		471AF3E126CFF5A100F48E37 /* LaunchesLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471AF3E026CFF5A100F48E37 /* LaunchesLoadingView.swift */; };
 		471AF3EC26D1153400F48E37 /* LaunchesCellConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471AF3EB26D1153400F48E37 /* LaunchesCellConfigurator.swift */; };
+		471AF3F726D13D0500F48E37 /* CacheDirectory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471AF3F626D13D0500F48E37 /* CacheDirectory.swift */; };
 		471DEC4E264FCC740088F1AE /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471DEC4D264FCC740088F1AE /* Cache.swift */; };
 		473A0C202649B63200D5D1DF /* Launch+Arrange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473A0C1F2649B63200D5D1DF /* Launch+Arrange.swift */; };
 		473A0C282649B66900D5D1DF /* Rocket+Arrange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473A0C272649B66900D5D1DF /* Rocket+Arrange.swift */; };
@@ -73,6 +74,7 @@
 		471AF3DC26CFF31100F48E37 /* LaunchesStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchesStateView.swift; sourceTree = "<group>"; };
 		471AF3E026CFF5A100F48E37 /* LaunchesLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchesLoadingView.swift; sourceTree = "<group>"; };
 		471AF3EB26D1153400F48E37 /* LaunchesCellConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchesCellConfigurator.swift; sourceTree = "<group>"; };
+		471AF3F626D13D0500F48E37 /* CacheDirectory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheDirectory.swift; sourceTree = "<group>"; };
 		471DEC4D264FCC740088F1AE /* Cache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cache.swift; sourceTree = "<group>"; };
 		473A0C1F2649B63200D5D1DF /* Launch+Arrange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Launch+Arrange.swift"; sourceTree = "<group>"; };
 		473A0C272649B66900D5D1DF /* Rocket+Arrange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Rocket+Arrange.swift"; sourceTree = "<group>"; };
@@ -164,6 +166,7 @@
 			isa = PBXGroup;
 			children = (
 				471DEC4D264FCC740088F1AE /* Cache.swift */,
+				471AF3F626D13D0500F48E37 /* CacheDirectory.swift */,
 			);
 			path = Storage;
 			sourceTree = "<group>";
@@ -464,6 +467,7 @@
 				475FCF7E264D2D4A008C02B3 /* LaunchesFilterApplicator.swift in Sources */,
 				4769243126458A5F00E47A7E /* LaunchesService.swift in Sources */,
 				475FCF78264D2A5A008C02B3 /* LinkOptionsViewController.swift in Sources */,
+				471AF3F726D13D0500F48E37 /* CacheDirectory.swift in Sources */,
 				47A1D8772651ABA8006B03F6 /* LaunchOutcome.swift in Sources */,
 				471AF3E126CFF5A100F48E37 /* LaunchesLoadingView.swift in Sources */,
 				4769241C26457EA400E47A7E /* CompanyInfoViewModel.swift in Sources */,
