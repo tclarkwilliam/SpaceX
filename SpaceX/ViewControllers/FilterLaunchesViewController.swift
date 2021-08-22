@@ -57,6 +57,7 @@ class FilterLaunchesViewController: UIViewController {
   }
 
   private func configureTableView() {
+    filterTableView.accessibilityIdentifier = Constants.tableViewAccessibilityIdentifier.rawValue
     filterTableView.dataSource = self
     filterTableView.delegate = self
     registerCells()
@@ -135,6 +136,7 @@ extension FilterLaunchesViewController: UITableViewDataSource {
                                              for: indexPath) as! FilterTableViewCell
     let row = sections[indexPath.section].rows[indexPath.row]
     cell.accessoryType = row.selected ? .checkmark : .none
+    cell.accessibilityIdentifier = row.title
     cell.configure(row: row)
     return cell
   }
@@ -213,5 +215,6 @@ private extension FilterLaunchesViewController {
     case launchSuccess = "Launch Success"
     case launchYears = "Launch Years"
     case sort = "Sort"
+    case tableViewAccessibilityIdentifier = "FilterTableView"
   }
 }

@@ -35,6 +35,10 @@
                 </constraints>
             </tableViewCellContentView>
             <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <accessibility key="accessibilityConfiguration">
+                <accessibilityTraits key="traits" none="YES"/>
+                <bool key="isElement" value="YES"/>
+            </accessibility>
             <connections>
                 <outlet property="titleLabel" destination="RgV-Yb-nXG" id="rXT-3o-Qlf"/>
             </connections>

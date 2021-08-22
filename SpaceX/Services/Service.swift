@@ -9,10 +9,11 @@ import Foundation
 
 class Service {
 
-  private let session: URLSession
+  private let session: Session
 
-  init(session: URLSession = .shared) {
-    self.session = session
+  init(session: Session = URLSession(configuration: .default)) {
+    let shouldUseStubbedSession = CommandLine.arguments.contains("UITests")
+    self.session = shouldUseStubbedSession ? StubbedSession() : session
   }
 
   func fetch(url: URL,

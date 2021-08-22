@@ -109,6 +109,7 @@ class LaunchesViewController: UIViewController {
                                               style: .plain,
                                               target: self,
                                               action: #selector(showFilter))
+    navigationItem.rightBarButtonItem?.accessibilityIdentifier = Constants.filterButtonAccessibilityIdentifier.rawValue
   }
 
   @objc private func showFilter() {
@@ -202,5 +203,6 @@ private extension LaunchesViewController {
     case companySectionHeader = "COMPANY"
     case launchesSectionHeader = "LAUNCHES"
     case filterSymbol = "line.horizontal.3.decrease.circle"
+    case filterButtonAccessibilityIdentifier = "FilterButton"
   }
 }
