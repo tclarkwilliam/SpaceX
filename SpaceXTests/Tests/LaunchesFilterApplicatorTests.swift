@@ -95,22 +95,16 @@ class LaunchesFilterApplicatorTests: XCTestCase {
     return calendar.date(from: dateComponents)!
   }
 
-  private func successRow(_ success: LaunchOutcome) -> Row {
-    let row = ValueRow<LaunchOutcome>()
-    row.value = success
-    return row
+  private func successRow(_ success: LaunchOutcome) -> TableRow {
+    LaunchOutcomeTableRow(launchOutcome: success)
   }
 
-  private func yearRow(_ year: Int) -> Row {
-    let row = ValueRow<Int>()
-    row.value = year
-    return row
+  private func yearRow(_ year: Int) -> TableRow {
+    LaunchYearTableRow(launchYear: year)
   }
 
-  private func sortOrderRow(_ order: SortOrder) -> Row {
-    let row = ValueRow<SortOrder>()
-    row.value = order
-    return row
+  private func sortOrderRow(_ order: SortOrder) -> TableRow {
+    SortTableRow(sortOrder: order)
   }
 
 }

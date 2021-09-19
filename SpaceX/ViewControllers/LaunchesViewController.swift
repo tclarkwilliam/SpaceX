@@ -12,21 +12,16 @@ class LaunchesViewController: UIViewController {
   @IBOutlet weak private var launchesTableView: UITableView!
   @IBOutlet weak private var stateView: LaunchesStateView!
 
-  private var sections = [TableViewSection]()
-  private var launchesSection: TableViewSection?
   private var launchViewModels: [LaunchViewModel]?
+  private var companyInfoSection: TableViewSection?
+  private var launchesSection: TableViewSection?
+  private var tableDataSource: TableDataSource?
 
   override func viewDidLoad() {
     super.viewDidLoad()
     title = Constants.title.rawValue
-    configureTableView()
-    fetchCompanyInfo()
-  }
-
-  private func configureTableView() {
-    launchesTableView.dataSource = self
-    launchesTableView.delegate = self
     registerCells()
+    fetchCompanyInfo()
   }
 
   private func registerCells() {
@@ -50,23 +45,19 @@ class LaunchesViewController: UIViewController {
   }
 
   private func configureCompanyInfoSection(from companyInfo: CompanyInfo) {
-    let section = TableViewSection(title: Constants.companySectionHeader.rawValue,
-                                   rows: [companyInfoRow(from: companyInfo)])
-    updateSection(section)
-  }
-
-  private func companyInfoRow(from companyInfo: CompanyInfo) -> ValueRow<CompanyInfoViewModel> {
     let companyInfoViewModel = CompanyInfoViewModel(companyInfo: companyInfo)
-    let row = ValueRow<CompanyInfoViewModel>()
-    row.value = companyInfoViewModel
-    return row
+    let rows = [CompanyTableRow(viewModel: companyInfoViewModel)]
+    companyInfoSection = TableViewSection(title: Constants.companySectionHeader.rawValue,
+                                          rows: rows)
   }
 
   private func fetchLaunches() {
     LaunchesService().fetchLaunches { result in
       switch result {
       case .success(let launches):
-        self.configureLaunchesSection(from: launches)
+        let launchViewModels = launches.compactMap { LaunchViewModel(launch: $0) }
+        self.launchViewModels = launchViewModels
+        self.configureLaunchesSection(with: launchViewModels)
         self.configureFilter()
         self.showLaunches()
       case .failure(_):
@@ -75,20 +66,23 @@ class LaunchesViewController: UIViewController {
     }
   }
 
-  private func configureLaunchesSection(from launches: [Launch]) {
-    let launchViewModels = launches.compactMap { LaunchViewModel(launch: $0) }
+  private func configureLaunchesSection(with launchViewModels: [LaunchViewModel]) {
+    let rows = launchViewModels.compactMap { viewModel -> LaunchesTableRow? in
+      let row = LaunchesTableRow(viewModel: viewModel)
+      row.selected = { self.showLinkOptions(indexPath: $0, viewModel: viewModel) }
+      return row
+    }
     launchesSection = TableViewSection(title: Constants.launchesSectionHeader.rawValue,
-                                       rows: launchRows(from: launchViewModels))
-    updateSection(launchesSection)
-    self.launchViewModels = launchViewModels
+                                       rows: rows)
+    configureDataSource()
   }
 
-  private func launchRows(from launchViewModels: [LaunchViewModel]) -> [ValueRow<LaunchViewModel>] {
-    return launchViewModels.compactMap { launchViewModel in
-      let launchRow = ValueRow<LaunchViewModel>()
-      launchRow.value = launchViewModel
-      return launchRow
-    }
+  private func configureDataSource() {
+    guard let companyInfo = companyInfoSection,
+          let launchesSection = launchesSection else { return }
+    tableDataSource = TableDataSource(tableView: launchesTableView,
+                                      sections: [companyInfo, launchesSection])
+    launchesTableView.reloadData()
   }
 
   private func showLoading() {
@@ -129,16 +123,8 @@ class LaunchesViewController: UIViewController {
   }
 
   private func updateLaunchesSection(with launchViewModels: [LaunchViewModel]) {
-    launchesSection?.updateRows(launchRows(from: launchViewModels))
-    sections.remove(at: sections.count - 1)
-    updateSection(launchesSection)
+    configureLaunchesSection(with: launchViewModels)
     scrollToTop()
-  }
-
-  private func updateSection(_ section: TableViewSection?) {
-    guard let section = section else { return }
-    sections.insert(section, at: sections.count)
-    launchesTableView.reloadData()
   }
 
   private func scrollToTop() {
@@ -146,44 +132,12 @@ class LaunchesViewController: UIViewController {
                                   at: .top,
                                   animated: false)
   }
-  
-}
 
-extension LaunchesViewController: UITableViewDataSource {
-
-  func tableView(_ tableView: UITableView,
-                 numberOfRowsInSection section: Int) -> Int {
-    sections[section].numberOfRows
-  }
-
-  func numberOfSections(in tableView: UITableView) -> Int {
-    sections.count
-  }
-
-  func tableView(_ tableView: UITableView,
-                 titleForHeaderInSection section: Int) -> String? {
-    sections[section].title
-  }
-
-  func tableView(_ tableView: UITableView,
-                 cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let cellConfigurator = LaunchesCellConfigurator(tableView: tableView,
-                                                    sections: sections,
-                                                    indexPath: indexPath)
-    return cellConfigurator.cell()
-  }
-
-}
-
-extension LaunchesViewController: UITableViewDelegate {
-
-  func tableView(_ tableView: UITableView,
-                 didSelectRowAt indexPath: IndexPath) {
-    guard let row = sections[indexPath.section].rows[indexPath.row] as? ValueRow<LaunchViewModel>,
-          let launchViewModel = row.value,
-          let viewController = linkOptionsViewController(launchViewModel: launchViewModel) else { return }
+  private func showLinkOptions(indexPath: IndexPath,
+                               viewModel: LaunchViewModel) {
+    guard let viewController = linkOptionsViewController(launchViewModel: viewModel) else { return }
     let activityViewController = ActivityViewController(childViewController: viewController)
-    let cell = tableView.cellForRow(at: indexPath)
+    let cell = launchesTableView.cellForRow(at: indexPath)
     activityViewController.popoverPresentationController?.sourceView = cell
     present(activityViewController, animated: true)
   }

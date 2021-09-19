@@ -7,10 +7,10 @@
 
 class LaunchesFilterApplicator {
 
-  private let filters: [Row]
+  private let filters: [TableRow]
   private let launchViewModels: [LaunchViewModel]
 
-  init(filters: [Row],
+  init(filters: [TableRow],
        launchViewModels: [LaunchViewModel]) {
     self.filters = filters
     self.launchViewModels = launchViewModels
@@ -18,31 +18,31 @@ class LaunchesFilterApplicator {
 
   func apply() -> [LaunchViewModel] {
     var filteredLaunchViewModels = launchViewModels
-    if let launchOutcome = launchOutcome {
+    if let launchOutcome = launchOutcome() {
       filteredLaunchViewModels = filteredLaunchViewModels.filter { $0.isLaunchSuccessful == launchOutcome.isSuccess }
     }
-    if let filteredLaunchYears = filteredLaunchYears, !filteredLaunchYears.isEmpty {
-      filteredLaunchViewModels = filteredLaunchViewModels.filter { filteredLaunchYears.contains($0.launchYear) }
+    if let launchYears = launchYears(), !launchYears.isEmpty {
+      filteredLaunchViewModels = filteredLaunchViewModels.filter { launchYears.contains($0.launchYear) }
     }
-    if let filteredSortOrder = filteredSortOrder {
-      filteredLaunchViewModels.sort { filteredSortOrder.isAscending ? $0.launchYear < $1.launchYear : $0.launchYear > $1.launchYear }
+    if let sortOrder = sortOrder() {
+      filteredLaunchViewModels.sort { sortOrder.isAscending ? $0.launchYear < $1.launchYear : $0.launchYear > $1.launchYear }
     }
     return filters.isEmpty ? launchViewModels : filteredLaunchViewModels
   }
 
-  private var launchOutcome: LaunchOutcome? {
-    let launchRows = filters.filter { $0 is ValueRow<LaunchOutcome> } as? [ValueRow<LaunchOutcome>]
-    return launchRows?.compactMap { $0.value }.first
+  private func launchOutcome() -> LaunchOutcome? {
+    let outcomeRows = filters.filter { $0 is LaunchOutcomeTableRow } as? [LaunchOutcomeTableRow]
+    return outcomeRows?.compactMap { $0.launchOutcome }.first
   }
 
-  private var filteredLaunchYears: [Int]? {
-    let launchYearsRows = filters.filter { $0 is ValueRow<Int> } as? [ValueRow<Int>]
-    return launchYearsRows?.compactMap { $0.value }
+  private func launchYears() -> [Int]? {
+    let yearRows = filters.filter { $0 is LaunchYearTableRow } as? [LaunchYearTableRow]
+    return yearRows?.compactMap { $0.launchYear }
   }
 
-  private var filteredSortOrder: SortOrder? {
-    let sortOrderRows = filters.filter { $0 is ValueRow<SortOrder> } as? [ValueRow<SortOrder>]
-    return sortOrderRows?.compactMap { $0.value }.first
+  private func sortOrder() -> SortOrder? {
+    let sortRows = filters.filter { $0 is SortTableRow } as? [SortTableRow]
+    return sortRows?.compactMap { $0.sortOrder }.first
   }
 
 }

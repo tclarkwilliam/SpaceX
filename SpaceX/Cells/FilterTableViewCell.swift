@@ -13,8 +13,12 @@ class FilterTableViewCell: UITableViewCell {
 
   static let identifier = String(describing: FilterTableViewCell.self)
 
-  func configure(row: Row) {
-    titleLabel.text = row.title
+  func configure(filter: Filter) {
+    titleLabel.text = filter.value
   }
 
+}
+
+struct Filter {
+  let value: String
 }
