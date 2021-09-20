@@ -18,7 +18,3 @@ class FilterTableViewCell: UITableViewCell {
   }
 
 }
-
-struct Filter {
-  let value: String
-}

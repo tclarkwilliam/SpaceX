@@ -37,6 +37,7 @@
 		476924492645ABF700E47A7E /* Rocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 476924482645ABF700E47A7E /* Rocket.swift */; };
 		476924512649903900E47A7E /* CompanyInfoViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 476924502649903900E47A7E /* CompanyInfoViewModelTests.swift */; };
 		476924592649A9EF00E47A7E /* Links.swift in Sources */ = {isa = PBXBuildFile; fileRef = 476924582649A9EF00E47A7E /* Links.swift */; };
+		477D8C4826F92C7300389ADA /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477D8C4726F92C7200389ADA /* Filter.swift */; };
 		4780E9A926445E130027D12B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4780E9A826445E130027D12B /* AppDelegate.swift */; };
 		4780E9AB26445E130027D12B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4780E9AA26445E130027D12B /* SceneDelegate.swift */; };
 		4780E9AD26445E130027D12B /* LaunchesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4780E9AC26445E130027D12B /* LaunchesViewController.swift */; };
@@ -121,6 +122,7 @@
 		476924482645ABF700E47A7E /* Rocket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rocket.swift; sourceTree = "<group>"; };
 		476924502649903900E47A7E /* CompanyInfoViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyInfoViewModelTests.swift; sourceTree = "<group>"; };
 		476924582649A9EF00E47A7E /* Links.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Links.swift; sourceTree = "<group>"; };
+		477D8C4726F92C7200389ADA /* Filter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
 		4780E9A526445E130027D12B /* SpaceX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpaceX.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4780E9A826445E130027D12B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4780E9AA26445E130027D12B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -259,6 +261,7 @@
 				4782D8C2265092CB00E0229E /* CachedImage.swift */,
 				4769242326457EBE00E47A7E /* CompanyInfo.swift */,
 				4782D8C7265114D900E0229E /* Constants.swift */,
+				477D8C4726F92C7200389ADA /* Filter.swift */,
 				4769243526458AEE00E47A7E /* Launch.swift */,
 				47A1D8762651ABA8006B03F6 /* LaunchOutcome.swift */,
 				476924582649A9EF00E47A7E /* Links.swift */,
@@ -584,6 +587,7 @@
 				473A68DC264B1CDE00D8A14B /* FilterLaunchesViewController.swift in Sources */,
 				476924162645487000E47A7E /* CompanyInfoService.swift in Sources */,
 				478F418726EE8EC60043FA2D /* LaunchOutcomeTableRow.swift in Sources */,
+				477D8C4826F92C7300389ADA /* Filter.swift in Sources */,
 				47A1D87C2651ABCA006B03F6 /* SortOrder.swift in Sources */,
 				475FCF73264D2A41008C02B3 /* ActivityViewController.swift in Sources */,
 				471DEC4E264FCC740088F1AE /* Cache.swift in Sources */,
