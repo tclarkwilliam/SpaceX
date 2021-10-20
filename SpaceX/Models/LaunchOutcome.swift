@@ -10,7 +10,7 @@ enum LaunchOutcome: String {
   case success = "Success"
   case failure = "Failure"
 
-  var isSuccess: Bool {
+  var isLaunchSuccessful: Bool {
     switch self {
     case .success:
       return true

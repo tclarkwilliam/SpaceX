@@ -10,8 +10,7 @@ import UIKit
 class CompanyTableRow: TableRow {
 
   var isSelected: Bool = false
-  var selectedIndexPath: IndexPath?
-
+  
   private let viewModel: CompanyInfoViewModel
 
   init(viewModel: CompanyInfoViewModel) {

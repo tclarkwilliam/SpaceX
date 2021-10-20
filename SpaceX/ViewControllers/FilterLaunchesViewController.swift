@@ -33,27 +33,24 @@ class FilterLaunchesViewController: UIViewController {
     super.viewDidLoad()
     configureNavigationBar()
     configureTableView()
-    tableDataSource?.removeFilters()
     tableDataSource = FilterLaunchesTableDataSource(tableView: filterTableView,
-                                                    sections: [launchSuccessSection(),
-                                                               launchYearsSection(),
-                                                               sortSection()])
+                                                    launchViewModels: launchViewModels)
   }
 
   private func configureNavigationBar() {
     title = Constants.title.rawValue
-    navigationItem.leftBarButtonItem = .init(image: UIImage(systemName: GlobalConstants.crossSymbol.rawValue),
-                                             style: .plain,
-                                             target: self,
-                                             action: #selector(dismissViewController))
-    navigationItem.rightBarButtonItem = .init(image: UIImage(systemName: GlobalConstants.checkmarkSymbol.rawValue),
-                                             style: .plain,
-                                             target: self,
-                                             action: #selector(applyFilters))
+    navigationItem.leftBarButtonItem = barButtonItem(imageName: GlobalConstants.crossSymbol.rawValue,
+                                                     action: #selector(dismissViewController))
+    navigationItem.rightBarButtonItem = barButtonItem(imageName: GlobalConstants.checkmarkSymbol.rawValue,
+                                                      action: #selector(applyFilters))
   }
 
-  @objc private func dismissViewController() {
-    navigationController?.dismiss(animated: true)
+  private func barButtonItem(imageName: String,
+                             action: Selector) -> UIBarButtonItem {
+    .init(image: UIImage(systemName: imageName),
+          style: .plain,
+          target: self,
+          action: action)
   }
 
   private func configureTableView() {
@@ -62,39 +59,19 @@ class FilterLaunchesViewController: UIViewController {
   }
 
   private func registerCells() {
-    let nib = UINib(nibName: FilterTableViewCell.identifier, bundle: nil)
-    filterTableView.register(nib, forCellReuseIdentifier: FilterTableViewCell.identifier)
+    filterTableView.register(UINib(nibName: FilterTableViewCell.identifier, bundle: nil),
+                             forCellReuseIdentifier: FilterTableViewCell.identifier)
   }
 
-  private func launchSuccessSection() -> TableViewSection {
-    TableViewSection(title: Constants.launchSuccess.rawValue,
-                     rows: [LaunchOutcomeTableRow(launchOutcome: .success),
-                            LaunchOutcomeTableRow(launchOutcome: .failure)])
-  }
-
-  private func launchYearsSection() -> TableViewSection {
-    TableViewSection(title: Constants.launchYears.rawValue,
-                     rows: launchYears(),
-                     allowsMultipleSelection: true)
-  }
-
-  private func launchYears() -> [LaunchYearTableRow] {
-    let launchYears = launchViewModels.map { $0.launchYear }
-    var uniqueYears = Array(Set(launchYears))
-    uniqueYears.sort()
-    return uniqueYears.compactMap { LaunchYearTableRow(launchYear: $0) }
-  }
-
-  private func sortSection() -> TableViewSection {
-    TableViewSection(title: Constants.sort.rawValue,
-                     rows: [SortTableRow(sortOrder: .ascending),
-                            SortTableRow(sortOrder: .descending)])
+  @objc private func dismissViewController() {
+    navigationController?.dismiss(animated: true)
   }
 
   @objc private func applyFilters() {
-    guard let filters = tableDataSource?.selectedFilters else { return }
-    let filterApplicator = LaunchesFilterApplicator(filters: filters, launchViewModels: launchViewModels)
-    updateLaunches?(filterApplicator.apply())
+    guard let filteredRows = tableDataSource?.filteredRows else { return }
+    let filterApplicator = LaunchesFilterApplicator(filteredRows: filteredRows,
+                                                    launchViewModels: launchViewModels)
+    updateLaunches?(filterApplicator.filteredLaunches())
     dismissViewController()
   }
 
@@ -103,9 +80,6 @@ class FilterLaunchesViewController: UIViewController {
 private extension FilterLaunchesViewController {
   enum Constants: String {
     case title = "Filter Launches"
-    case launchSuccess = "Launch Success"
-    case launchYears = "Launch Years"
-    case sort = "Sort"
     case tableViewAccessibilityIdentifier = "FilterTableView"
   }
 }

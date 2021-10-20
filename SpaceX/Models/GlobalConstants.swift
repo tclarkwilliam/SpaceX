@@ -1,5 +1,5 @@
 //
-//  Constants.swift
+//  GlobalConstants.swift
 //  SpaceX
 //
 //  Created by Tom on 16/05/2021.

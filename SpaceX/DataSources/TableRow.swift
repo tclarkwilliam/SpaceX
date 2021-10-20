@@ -13,7 +13,6 @@ protocol TableRow: class {
   func didSelect(tableView: UITableView,
                  indexPath: IndexPath)
   var isSelected: Bool { get set }
-  var selectedIndexPath: IndexPath? { get set }
 }
 
 extension TableRow {

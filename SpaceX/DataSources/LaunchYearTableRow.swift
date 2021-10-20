@@ -9,13 +9,19 @@ import UIKit
 
 class LaunchYearTableRow: TableRow {
 
+  var didSelect: (() -> Void)?
   var isSelected: Bool = false
-  var selectedIndexPath: IndexPath?
+  
+  private var selectedIndexPath: IndexPath?
 
-  let launchYear: Int
+  private let launchYear: Int
 
   init(launchYear: Int) {
     self.launchYear = launchYear
+  }
+
+  var year: Int {
+    launchYear
   }
 
   func cell(tableView: UITableView,
@@ -26,6 +32,13 @@ class LaunchYearTableRow: TableRow {
     cell.accessibilityIdentifier = filter.value
     cell.configure(filter: filter)
     return cell
+  }
+
+  func didSelect(tableView: UITableView,
+                 indexPath: IndexPath) {
+    isSelected = !isSelected
+    tableView.reloadRows(at: [indexPath], with: .automatic)
+    didSelect?()
   }
 
 }

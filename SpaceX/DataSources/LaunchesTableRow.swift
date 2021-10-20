@@ -9,9 +9,8 @@ import UIKit
 
 class LaunchesTableRow: TableRow {
 
+  var didSelect: ((IndexPath) -> Void)?
   var isSelected: Bool = false
-  var selectedIndexPath: IndexPath?
-  var selected: ((IndexPath) -> Void)?
   
   private let viewModel: LaunchViewModel
 
@@ -34,7 +33,7 @@ class LaunchesTableRow: TableRow {
 
   func didSelect(tableView: UITableView,
                  indexPath: IndexPath) {
-    selected?(indexPath)
+    didSelect?(indexPath)
   }
 
   private func fetchMissionImage(viewModel: LaunchViewModel,

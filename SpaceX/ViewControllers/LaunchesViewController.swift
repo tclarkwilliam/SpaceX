@@ -69,7 +69,7 @@ class LaunchesViewController: UIViewController {
   private func configureLaunchesSection(with launchViewModels: [LaunchViewModel]) {
     let rows = launchViewModels.compactMap { viewModel -> LaunchesTableRow? in
       let row = LaunchesTableRow(viewModel: viewModel)
-      row.selected = { self.showLinkOptions(indexPath: $0, viewModel: viewModel) }
+      row.didSelect = { self.showLinkOptions(indexPath: $0, viewModel: viewModel) }
       return row
     }
     launchesSection = TableViewSection(title: Constants.launchesSectionHeader.rawValue,

@@ -7,72 +7,75 @@
 
 import UIKit
 
-class FilterLaunchesTableDataSource: TableDataSource {
+class FilterLaunchesTableDataSource {
 
-  var selectedFilters = [TableRow]()
+  private var filterRows = [TableRow]()
+  private var dataSource: TableDataSource?
 
-  private let sections: [TableSection]
+  private let tableView: UITableView
+  private let launchViewModels: [LaunchViewModel]
 
-  override init(tableView: UITableView,
-                sections: [TableSection]) {
-    self.sections = sections
-    super.init(tableView: tableView, sections: sections)
+  init(tableView: UITableView,
+       launchViewModels: [LaunchViewModel]) {
+    self.tableView = tableView
+    self.launchViewModels = launchViewModels
+    dataSource = TableDataSource(tableView: tableView,
+                                 sections: sections())
   }
 
-  func removeFilters() {
-    selectedFilters.removeAll()
+  var filteredRows: [TableRow] {
+    filterRows.filter { $0.isSelected }
   }
 
-  func tableView(_ tableView: UITableView,
-                 willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-    if !sections[indexPath.section].allowsMultipleSelection {
-      configureSingleSelection(tableView: tableView, indexPath: indexPath)
-    }
-    return indexPath
+  private func sections() -> [TableSection] {
+    [launchOutcomeSection(),
+     launchYearsSection(),
+     sortSection()]
   }
 
-  private func configureSingleSelection(tableView: UITableView,
-                                        indexPath: IndexPath) {
-    let rows = sections[indexPath.section].rows
-    let selectedRows = rows.filter { $0.isSelected }
-    let currentRowNotSelected = !selectedRows.isEmpty
-    if currentRowNotSelected,
-       let selectedIndexPath = selectedRows.first?.selectedIndexPath {
-      deselectPreviousRow(tableView: tableView,
-                          indexPath: indexPath,
-                          selectedIndexPath: selectedIndexPath)
-    }
+  private func launchOutcomeSection() -> TableViewSection {
+    let successRow = LaunchOutcomeTableRow(launchOutcome: .success)
+    let failureRow = LaunchOutcomeTableRow(launchOutcome: .failure)
+    successRow.didSelect = { failureRow.deselect(tableView: self.tableView) }
+    failureRow.didSelect = { successRow.deselect(tableView: self.tableView) }
+    let rows = [successRow, failureRow]
+    filterRows.append(contentsOf: rows)
+    return TableViewSection(title: Constants.launchSuccess.rawValue,
+                            rows: rows)
   }
 
-  private func deselectPreviousRow(tableView: UITableView,
-                                   indexPath: IndexPath,
-                                   selectedIndexPath: IndexPath) {
-    tableView.deselectRow(at: selectedIndexPath, animated: true)
-    let cell = tableView.cellForRow(at: selectedIndexPath)
-    cell?.accessoryType = .none
-    let rows = sections[indexPath.section].rows
-    let previousRow = rows[selectedIndexPath.row]
-    let currentRow = rows[indexPath.row]
-    previousRow.isSelected = currentRow.isSelected
-    updateSelectedFilters(for: previousRow)
+  private func launchYearsSection() -> TableViewSection {
+    let rows = launchYearRows()
+    filterRows.append(contentsOf: rows)
+    return TableViewSection(title: Constants.launchYears.rawValue,
+                            rows: rows,
+                            allowsMultipleSelection: true)
   }
 
-  override func tableView(_ tableView: UITableView,
-                          didSelectRowAt indexPath: IndexPath) {
-    let row = sections[indexPath.section].rows[indexPath.row]
-    row.isSelected = !row.isSelected
-    updateSelectedFilters(for: row)
-    row.selectedIndexPath = indexPath
-    tableView.reloadRows(at: [indexPath], with: .automatic)
+  private func launchYearRows() -> [LaunchYearTableRow] {
+    let launchYears = launchViewModels.map { $0.launchYear }
+    var uniqueYears = Array(Set(launchYears))
+    uniqueYears.sort()
+    return uniqueYears.compactMap { LaunchYearTableRow(launchYear: $0) }
   }
 
-  private func updateSelectedFilters(for row: TableRow) {
-    if row.isSelected {
-      selectedFilters.append(row)
-    } else if let rowToRemove = selectedFilters.firstIndex(where: { $0 === row }) {
-      selectedFilters.remove(at: rowToRemove)
-    }
+  private func sortSection() -> TableViewSection {
+    let ascendingRow = SortTableRow(sortOrder: .ascending)
+    let descendingRow = SortTableRow(sortOrder: .descending)
+    ascendingRow.didSelect = { descendingRow.deselect(tableView: self.tableView) }
+    descendingRow.didSelect = { ascendingRow.deselect(tableView: self.tableView) }
+    let rows = [ascendingRow, descendingRow]
+    filterRows.append(contentsOf: rows)
+    return TableViewSection(title: Constants.sort.rawValue,
+                            rows: rows)
   }
 
 }
 
+private extension FilterLaunchesTableDataSource {
+  enum Constants: String {
+    case launchSuccess = "Launch Success"
+    case launchYears = "Launch Years"
+    case sort = "Sort"
+  }
+}

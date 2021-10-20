@@ -10,3 +10,7 @@ protocol TableSection {
   var rows: [TableRow] { get }
   var allowsMultipleSelection: Bool { get }
 }
+
+extension TableSection {
+  var allowsMultipleSelection: Bool { false }
+}

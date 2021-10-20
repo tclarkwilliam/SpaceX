@@ -9,13 +9,19 @@ import UIKit
 
 class SortTableRow: TableRow {
 
+  var didSelect: (() -> Void)?
   var isSelected: Bool = false
-  var selectedIndexPath: IndexPath?
 
-  let sortOrder: SortOrder
+  private var selectedIndexPath: IndexPath?
+
+  private let sortOrder: SortOrder
 
   init(sortOrder: SortOrder) {
     self.sortOrder = sortOrder
+  }
+
+  var isAscending: Bool {
+    sortOrder.isAscending
   }
 
   func cell(tableView: UITableView,
@@ -26,6 +32,21 @@ class SortTableRow: TableRow {
     cell.accessibilityIdentifier = filter.value
     cell.configure(filter: filter)
     return cell
+  }
+
+  func didSelect(tableView: UITableView,
+                 indexPath: IndexPath) {
+    isSelected = !isSelected
+    tableView.reloadRows(at: [indexPath], with: .automatic)
+    selectedIndexPath = indexPath
+    didSelect?()
+  }
+
+  func deselect(tableView: UITableView) {
+    guard let selectedIndexPath = selectedIndexPath else { return }
+    tableView.deselectRow(at: selectedIndexPath, animated: true)
+    isSelected = false
+    tableView.reloadRows(at: [selectedIndexPath], with: .automatic)
   }
 
 }

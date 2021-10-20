@@ -7,42 +7,47 @@
 
 class LaunchesFilterApplicator {
 
-  private let filters: [TableRow]
+  private var filteredLaunchViewModels: [LaunchViewModel]
+  private let filteredRows: [TableRow]
   private let launchViewModels: [LaunchViewModel]
 
-  init(filters: [TableRow],
+  init(filteredRows: [TableRow],
        launchViewModels: [LaunchViewModel]) {
-    self.filters = filters
+    self.filteredRows = filteredRows
     self.launchViewModels = launchViewModels
+    filteredLaunchViewModels = launchViewModels
   }
 
-  func apply() -> [LaunchViewModel] {
-    var filteredLaunchViewModels = launchViewModels
-    if let launchOutcome = launchOutcome() {
-      filteredLaunchViewModels = filteredLaunchViewModels.filter { $0.isLaunchSuccessful == launchOutcome.isSuccess }
+  func filteredLaunches() -> [LaunchViewModel] {
+    filterLaunchOutcome()
+    filterLaunchYears()
+    filterSort()
+    return filteredLaunchViewModels
+  }
+
+  private func filterLaunchOutcome() {
+    let outcomeRows: [LaunchOutcomeTableRow]? = rows()
+    if let outcomeRow = outcomeRows?.first {
+      filteredLaunchViewModels = filteredLaunchViewModels.filter { $0.isLaunchSuccessful == outcomeRow.isLaunchSuccessful }
     }
-    if let launchYears = launchYears(), !launchYears.isEmpty {
-      filteredLaunchViewModels = filteredLaunchViewModels.filter { launchYears.contains($0.launchYear) }
+  }
+
+  private func filterLaunchYears() {
+    let launchYears: [LaunchYearTableRow]? = rows()
+    if let launchYears = launchYears, !launchYears.isEmpty {
+      filteredLaunchViewModels = filteredLaunchViewModels.filter { filtered in launchYears.contains(where: { $0.year == filtered.launchYear }) }
     }
-    if let sortOrder = sortOrder() {
-      filteredLaunchViewModels.sort { sortOrder.isAscending ? $0.launchYear < $1.launchYear : $0.launchYear > $1.launchYear }
+  }
+
+  private func filterSort() {
+    let sortRows: [SortTableRow]? = rows()
+    if let sortRow = sortRows?.first {
+      filteredLaunchViewModels.sort { sortRow.isAscending ? $0.launchYear < $1.launchYear : $0.launchYear > $1.launchYear }
     }
-    return filters.isEmpty ? launchViewModels : filteredLaunchViewModels
   }
 
-  private func launchOutcome() -> LaunchOutcome? {
-    let outcomeRows = filters.filter { $0 is LaunchOutcomeTableRow } as? [LaunchOutcomeTableRow]
-    return outcomeRows?.compactMap { $0.launchOutcome }.first
-  }
-
-  private func launchYears() -> [Int]? {
-    let yearRows = filters.filter { $0 is LaunchYearTableRow } as? [LaunchYearTableRow]
-    return yearRows?.compactMap { $0.launchYear }
-  }
-
-  private func sortOrder() -> SortOrder? {
-    let sortRows = filters.filter { $0 is SortTableRow } as? [SortTableRow]
-    return sortRows?.compactMap { $0.sortOrder }.first
+  private func rows<T: TableRow>() -> [T]? {
+    filteredRows.filter { $0 is T } as? [T]
   }
 
 }
