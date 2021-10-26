@@ -1,5 +1,5 @@
 //
-//  SortTableRow.swift
+//  LaunchOrderTableRow.swift
 //  SpaceX
 //
 //  Created by Tom on 12/09/2021.
@@ -7,28 +7,28 @@
 
 import UIKit
 
-class SortTableRow: TableRow {
+class LaunchOrderTableRow: TableRow {
 
   var didSelect: (() -> Void)?
   var isSelected: Bool = false
 
   private var selectedIndexPath: IndexPath?
 
-  private let sortOrder: SortOrder
+  private let launchOrder: LaunchOrder
 
-  init(sortOrder: SortOrder) {
-    self.sortOrder = sortOrder
+  init(launchOrder: LaunchOrder) {
+    self.launchOrder = launchOrder
   }
 
   var isAscending: Bool {
-    sortOrder.isAscending
+    launchOrder.isAscending
   }
 
   func cell(tableView: UITableView,
             indexPath: IndexPath) -> UITableViewCell {
     let cell: FilterTableViewCell = tableView.dequeue(indexPath)
     cell.accessoryType = isSelected ? .checkmark : .none
-    let filter = Filter(value: sortOrder.rawValue)
+    let filter = Filter(value: launchOrder.rawValue)
     cell.accessibilityIdentifier = filter.value
     cell.configure(filter: filter)
     return cell

@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol TableRow: class {
+protocol TableRow: AnyObject {
   func cell(tableView: UITableView,
             indexPath: IndexPath) -> UITableViewCell
   func didSelect(tableView: UITableView,

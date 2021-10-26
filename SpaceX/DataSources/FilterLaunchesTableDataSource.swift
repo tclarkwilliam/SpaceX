@@ -30,7 +30,7 @@ class FilterLaunchesTableDataSource {
   private func sections() -> [TableSection] {
     [launchOutcomeSection(),
      launchYearsSection(),
-     sortSection()]
+     launchOrderSection()]
   }
 
   private func launchOutcomeSection() -> TableViewSection {
@@ -59,9 +59,9 @@ class FilterLaunchesTableDataSource {
     return uniqueYears.compactMap { LaunchYearTableRow(launchYear: $0) }
   }
 
-  private func sortSection() -> TableViewSection {
-    let ascendingRow = SortTableRow(sortOrder: .ascending)
-    let descendingRow = SortTableRow(sortOrder: .descending)
+  private func launchOrderSection() -> TableViewSection {
+    let ascendingRow = LaunchOrderTableRow(launchOrder: .ascending)
+    let descendingRow = LaunchOrderTableRow(launchOrder: .descending)
     ascendingRow.didSelect = { descendingRow.deselect(tableView: self.tableView) }
     descendingRow.didSelect = { ascendingRow.deselect(tableView: self.tableView) }
     let rows = [ascendingRow, descendingRow]

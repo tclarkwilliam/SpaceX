@@ -11,57 +11,57 @@ import XCTest
 
 class LaunchesFilterApplicatorTests: XCTestCase {
 
-  func test_apply_launchSuccess_returnsFilteredLaunches() {
-    let subject = LaunchesFilterApplicator(filteredRows: [successRow(.success)],
+  func test_apply_launchOutcome_returnsFilteredLaunches() {
+    let subject = LaunchesFilterApplicator(filteredRows: [outcomeRow(.success)],
                                            launchViewModels: launchViewModels)
     XCTAssertEqual(subject.filteredLaunches().count, 3)
   }
 
-  func test_apply_launchSuccess_launchYear_returnsFilteredLaunches() {
-    let subject = LaunchesFilterApplicator(filteredRows: [successRow(.success), yearRow(2016)],
+  func test_apply_launchOutcome_launchYear_returnsFilteredLaunches() {
+    let subject = LaunchesFilterApplicator(filteredRows: [outcomeRow(.success), yearRow(2016)],
                                            launchViewModels: launchViewModels)
     XCTAssertEqual(subject.filteredLaunches().count, 2)
   }
 
   func test_apply_launchFailure_launchYear_returnsFilteredLaunches() {
-    let subject = LaunchesFilterApplicator(filteredRows: [successRow(.failure), yearRow(2020)],
+    let subject = LaunchesFilterApplicator(filteredRows: [outcomeRow(.failure), yearRow(2020)],
                                            launchViewModels: launchViewModels)
     XCTAssertEqual(subject.filteredLaunches().count, 1)
   }
 
-  func test_apply_sortOrder_ascending_returnsFilteredLaunches() {
-    let subject = LaunchesFilterApplicator(filteredRows: [sortOrderRow(.ascending)],
+  func test_apply_launchOrder_ascending_returnsFilteredLaunches() {
+    let subject = LaunchesFilterApplicator(filteredRows: [orderRow(.ascending)],
                                            launchViewModels: launchViewModels)
     XCTAssertEqual(subject.filteredLaunches().count, 5)
     XCTAssertEqual(subject.filteredLaunches().first?.launchYear, 2006)
     XCTAssertEqual(subject.filteredLaunches().last?.launchYear, 2020)
   }
 
-  func test_apply_sortOrder_descending_returnsFilteredLaunches() {
-    let subject = LaunchesFilterApplicator(filteredRows: [sortOrderRow(.descending)],
+  func test_apply_launchOrder_descending_returnsFilteredLaunches() {
+    let subject = LaunchesFilterApplicator(filteredRows: [orderRow(.descending)],
                                            launchViewModels: launchViewModels)
     XCTAssertEqual(subject.filteredLaunches().count, 5)
     XCTAssertEqual(subject.filteredLaunches().first?.launchYear, 2020)
     XCTAssertEqual(subject.filteredLaunches().last?.launchYear, 2006)
   }
 
-  func test_apply_launchSuccess_launchYear_sortOrder_returnsFilteredLaunches() {
+  func test_apply_launchOutcome_launchYear_launchOrder_returnsFilteredLaunches() {
     let rows = [
-      successRow(.success),
+      outcomeRow(.success),
       yearRow(2016),
-      sortOrderRow(.ascending)
+      orderRow(.ascending)
     ]
     let subject = LaunchesFilterApplicator(filteredRows: rows,
                                            launchViewModels: launchViewModels)
     XCTAssertEqual(subject.filteredLaunches().count, 2)
   }
 
-  func test_apply_launchSuccess_multipleLaunchYears_sortOrder_returnsFilteredLaunches() {
+  func test_apply_launchOutcome_multipleLaunchYears_launchOrder_returnsFilteredLaunches() {
     let rows = [
-      successRow(.success),
+      outcomeRow(.success),
       yearRow(2016),
       yearRow(2006),
-      sortOrderRow(.ascending)
+      orderRow(.ascending)
     ]
     let subject = LaunchesFilterApplicator(filteredRows: rows,
                                            launchViewModels: launchViewModels)
@@ -69,7 +69,7 @@ class LaunchesFilterApplicatorTests: XCTestCase {
   }
 
   func test_apply_noMatches_returnsFilteredLaunches() {
-    let subject = LaunchesFilterApplicator(filteredRows: [successRow(.success), yearRow(2020)],
+    let subject = LaunchesFilterApplicator(filteredRows: [outcomeRow(.success), yearRow(2020)],
                                            launchViewModels: launchViewModels)
     XCTAssertEqual(subject.filteredLaunches().count, 0)
   }
@@ -95,16 +95,16 @@ class LaunchesFilterApplicatorTests: XCTestCase {
     return calendar.date(from: dateComponents)!
   }
 
-  private func successRow(_ success: LaunchOutcome) -> TableRow {
-    LaunchOutcomeTableRow(launchOutcome: success)
+  private func outcomeRow(_ outcome: LaunchOutcome) -> TableRow {
+    LaunchOutcomeTableRow(launchOutcome: outcome)
   }
 
   private func yearRow(_ year: Int) -> TableRow {
     LaunchYearTableRow(launchYear: year)
   }
 
-  private func sortOrderRow(_ order: SortOrder) -> TableRow {
-    SortTableRow(sortOrder: order)
+  private func orderRow(_ order: LaunchOrder) -> TableRow {
+    LaunchOrderTableRow(launchOrder: order)
   }
 
 }

@@ -55,11 +55,11 @@
 		4782D8CD26516B2700E0229E /* ImageServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4782D8CC26516B2700E0229E /* ImageServiceTests.swift */; };
 		478F418726EE8EC60043FA2D /* LaunchOutcomeTableRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478F418626EE8EC60043FA2D /* LaunchOutcomeTableRow.swift */; };
 		478F418C26EE8EFA0043FA2D /* LaunchYearTableRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478F418B26EE8EFA0043FA2D /* LaunchYearTableRow.swift */; };
-		478F419126EE8F0F0043FA2D /* SortTableRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478F419026EE8F0F0043FA2D /* SortTableRow.swift */; };
+		478F419126EE8F0F0043FA2D /* LaunchOrderTableRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478F419026EE8F0F0043FA2D /* LaunchOrderTableRow.swift */; };
 		478F419626EE8F2E0043FA2D /* FilterLaunchesTableDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478F419526EE8F2E0043FA2D /* FilterLaunchesTableDataSource.swift */; };
 		47A1D86426519828006B03F6 /* MockCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A1D86326519828006B03F6 /* MockCache.swift */; };
 		47A1D8772651ABA8006B03F6 /* LaunchOutcome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A1D8762651ABA8006B03F6 /* LaunchOutcome.swift */; };
-		47A1D87C2651ABCA006B03F6 /* SortOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A1D87B2651ABCA006B03F6 /* SortOrder.swift */; };
+		47A1D87C2651ABCA006B03F6 /* LaunchOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A1D87B2651ABCA006B03F6 /* LaunchOrder.swift */; };
 		47C1A08326D29D9200702C1C /* StubbedSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C1A08226D29D9200702C1C /* StubbedSession.swift */; };
 		47C1A09926DFF60200702C1C /* TableViewSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C1A09826DFF60200702C1C /* TableViewSection.swift */; };
 		47C1A09E26DFF65900702C1C /* TableRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C1A09D26DFF65900702C1C /* TableRow.swift */; };
@@ -144,11 +144,11 @@
 		4782D8CC26516B2700E0229E /* ImageServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageServiceTests.swift; sourceTree = "<group>"; };
 		478F418626EE8EC60043FA2D /* LaunchOutcomeTableRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchOutcomeTableRow.swift; sourceTree = "<group>"; };
 		478F418B26EE8EFA0043FA2D /* LaunchYearTableRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchYearTableRow.swift; sourceTree = "<group>"; };
-		478F419026EE8F0F0043FA2D /* SortTableRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortTableRow.swift; sourceTree = "<group>"; };
+		478F419026EE8F0F0043FA2D /* LaunchOrderTableRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchOrderTableRow.swift; sourceTree = "<group>"; };
 		478F419526EE8F2E0043FA2D /* FilterLaunchesTableDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterLaunchesTableDataSource.swift; sourceTree = "<group>"; };
 		47A1D86326519828006B03F6 /* MockCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCache.swift; sourceTree = "<group>"; };
 		47A1D8762651ABA8006B03F6 /* LaunchOutcome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchOutcome.swift; sourceTree = "<group>"; };
-		47A1D87B2651ABCA006B03F6 /* SortOrder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortOrder.swift; sourceTree = "<group>"; };
+		47A1D87B2651ABCA006B03F6 /* LaunchOrder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchOrder.swift; sourceTree = "<group>"; };
 		47C1A08226D29D9200702C1C /* StubbedSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubbedSession.swift; sourceTree = "<group>"; };
 		47C1A09826DFF60200702C1C /* TableViewSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewSection.swift; sourceTree = "<group>"; };
 		47C1A09D26DFF65900702C1C /* TableRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableRow.swift; sourceTree = "<group>"; };
@@ -263,10 +263,10 @@
 				477D8C4726F92C7200389ADA /* Filter.swift */,
 				4782D8C7265114D900E0229E /* GlobalConstants.swift */,
 				4769243526458AEE00E47A7E /* Launch.swift */,
+				47A1D87B2651ABCA006B03F6 /* LaunchOrder.swift */,
 				47A1D8762651ABA8006B03F6 /* LaunchOutcome.swift */,
 				476924582649A9EF00E47A7E /* Links.swift */,
 				476924482645ABF700E47A7E /* Rocket.swift */,
-				47A1D87B2651ABCA006B03F6 /* SortOrder.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -418,9 +418,9 @@
 				47C1A0AB26DFF6D900702C1C /* CompanyTableRow.swift */,
 				478F419526EE8F2E0043FA2D /* FilterLaunchesTableDataSource.swift */,
 				47C1A0A326DFF6B500702C1C /* LaunchesTableRow.swift */,
+				478F419026EE8F0F0043FA2D /* LaunchOrderTableRow.swift */,
 				478F418626EE8EC60043FA2D /* LaunchOutcomeTableRow.swift */,
 				478F418B26EE8EFA0043FA2D /* LaunchYearTableRow.swift */,
-				478F419026EE8F0F0043FA2D /* SortTableRow.swift */,
 				47C1A0B326DFF71300702C1C /* TableDataSource.swift */,
 				47C1A09D26DFF65900702C1C /* TableRow.swift */,
 				47D9010A26F7B4C700E8568D /* TableSection.swift */,
@@ -588,12 +588,12 @@
 				476924162645487000E47A7E /* CompanyInfoService.swift in Sources */,
 				478F418726EE8EC60043FA2D /* LaunchOutcomeTableRow.swift in Sources */,
 				477D8C4826F92C7300389ADA /* Filter.swift in Sources */,
-				47A1D87C2651ABCA006B03F6 /* SortOrder.swift in Sources */,
+				47A1D87C2651ABCA006B03F6 /* LaunchOrder.swift in Sources */,
 				475FCF73264D2A41008C02B3 /* ActivityViewController.swift in Sources */,
 				471DEC4E264FCC740088F1AE /* Cache.swift in Sources */,
 				4780E9AD26445E130027D12B /* LaunchesViewController.swift in Sources */,
 				4780E9A926445E130027D12B /* AppDelegate.swift in Sources */,
-				478F419126EE8F0F0043FA2D /* SortTableRow.swift in Sources */,
+				478F419126EE8F0F0043FA2D /* LaunchOrderTableRow.swift in Sources */,
 				4782D8B6265013B100E0229E /* ImageService.swift in Sources */,
 				471AF3B526CEA65200F48E37 /* LaunchesErrorView.swift in Sources */,
 				475FCF6B264BF669008C02B3 /* FilterTableViewCell.swift in Sources */,

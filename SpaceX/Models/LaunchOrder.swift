@@ -1,11 +1,11 @@
 //
-//  SortOrder.swift
+//  LaunchOrder.swift
 //  SpaceX
 //
 //  Created by Tom on 16/05/2021.
 //
 
-enum SortOrder: String {
+enum LaunchOrder: String {
 
   case ascending = "Ascending"
   case descending = "Descending"

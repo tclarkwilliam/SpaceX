@@ -72,20 +72,20 @@ class FilterLaunchesViewControllerTests: XCTestCase {
     XCTAssertTrue(yearCell2008.isSelected)
   }
 
-  func test_sortOrder_selectSameCell_isSelectedTrue() throws {
+  func test_launchOrder_selectSameCell_isSelectedTrue() throws {
     let ascendingCell = cell(identifier: Constants.ascendingCellIdentifier)
     ascendingCell.tap()
     XCTAssertTrue(ascendingCell.isSelected)
   }
 
-  func test_sortOrder_selectSameCellTwice_isSelectedFalse() throws {
+  func test_launchOrder_selectSameCellTwice_isSelectedFalse() throws {
     let ascendingCell = cell(identifier: Constants.ascendingCellIdentifier)
     ascendingCell.tap()
     ascendingCell.tap()
     XCTAssertFalse(ascendingCell.isSelected)
   }
 
-  func test_sortOrder_selectAscendingThenDescending_ascendingSelectedFalseAndDescendingSelectedTrue() throws {
+  func test_launchOrder_selectAscendingThenDescending_ascendingSelectedFalseAndDescendingSelectedTrue() throws {
     let ascendingCell = cell(identifier: Constants.ascendingCellIdentifier)
     let descendingCell = cell(identifier: Constants.descendingCellIdentifier)
     ascendingCell.tap()
