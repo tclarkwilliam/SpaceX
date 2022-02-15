@@ -12,7 +12,7 @@ class StubbedSession: Session {
   func dataTask(with url: URL,
                 completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) -> URLSessionDataTask {
     switch url {
-    case URL(string: "\(Service.Constants.baseURL.rawValue)info"):
+    case URL(string: "\(Service.Constants.baseURL.rawValue)company"):
       completionHandler(data(resource: "CompanyInfo"), nil, nil)
     case URL(string: "\(Service.Constants.baseURL.rawValue)launches"):
       completionHandler(data(resource: "Launches"), nil, nil)

@@ -9,7 +9,7 @@ import Foundation
 
 class CompanyInfoService {
 
-  typealias Completion = (Result<CompanyInfo, Error>) -> Void
+  typealias Completion = (Result<CompanyInfoViewModel, Error>) -> Void
 
   private let service: Service
 
@@ -29,7 +29,8 @@ class CompanyInfoService {
     guard let data = data else { return completion(.failure(ServiceError.invalidData)) }
     do {
       let companyInfo = try JSONDecoder().decode(CompanyInfo.self, from: data)
-      completion(.success(companyInfo))
+      let viewModel = CompanyInfoViewModel(companyInfo: companyInfo)
+      completion(.success(viewModel))
     } catch {
       completion(.failure(error))
     }
@@ -43,6 +44,6 @@ class CompanyInfoService {
 
 private extension CompanyInfoService {
   enum Constants: String {
-    case path = "info"
+    case path = "company"
   }
 }

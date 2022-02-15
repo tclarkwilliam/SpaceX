@@ -13,7 +13,6 @@ extension Launch {
   static func arrange(launchDate: Date = .init(timeIntervalSince1970: .zero),
                       launchSuccess: Bool = true) -> Launch {
     .init(missionName: "Mission",
-          rocket: .arrange(),
           date: launchDate,
           launchSuccess: launchSuccess,
           links: .arrange())

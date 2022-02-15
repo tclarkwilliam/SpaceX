@@ -14,7 +14,6 @@
 		471AF40126D1652300F48E37 /* FilterLaunchesViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471AF40026D1652300F48E37 /* FilterLaunchesViewControllerTests.swift */; };
 		471DEC4E264FCC740088F1AE /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471DEC4D264FCC740088F1AE /* Cache.swift */; };
 		473A0C202649B63200D5D1DF /* Launch+Arrange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473A0C1F2649B63200D5D1DF /* Launch+Arrange.swift */; };
-		473A0C282649B66900D5D1DF /* Rocket+Arrange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473A0C272649B66900D5D1DF /* Rocket+Arrange.swift */; };
 		473A0C2D2649B68500D5D1DF /* Links+Arrange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473A0C2C2649B68500D5D1DF /* Links+Arrange.swift */; };
 		473A0C362649B92600D5D1DF /* CompanyInfo+Arrange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473A0C352649B92600D5D1DF /* CompanyInfo+Arrange.swift */; };
 		473A0C3E2649CFD800D5D1DF /* CompanyInfoServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473A0C3D2649CFD800D5D1DF /* CompanyInfoServiceTests.swift */; };
@@ -34,7 +33,6 @@
 		4769243126458A5F00E47A7E /* LaunchesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4769243026458A5F00E47A7E /* LaunchesService.swift */; };
 		4769243626458AEE00E47A7E /* Launch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4769243526458AEE00E47A7E /* Launch.swift */; };
 		476924442645AB6100E47A7E /* LaunchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 476924432645AB6100E47A7E /* LaunchViewModel.swift */; };
-		476924492645ABF700E47A7E /* Rocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 476924482645ABF700E47A7E /* Rocket.swift */; };
 		476924512649903900E47A7E /* CompanyInfoViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 476924502649903900E47A7E /* CompanyInfoViewModelTests.swift */; };
 		476924592649A9EF00E47A7E /* Links.swift in Sources */ = {isa = PBXBuildFile; fileRef = 476924582649A9EF00E47A7E /* Links.swift */; };
 		477D8C4826F92C7300389ADA /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477D8C4726F92C7200389ADA /* Filter.swift */; };
@@ -99,7 +97,6 @@
 		471AF40226D1652300F48E37 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		471DEC4D264FCC740088F1AE /* Cache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cache.swift; sourceTree = "<group>"; };
 		473A0C1F2649B63200D5D1DF /* Launch+Arrange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Launch+Arrange.swift"; sourceTree = "<group>"; };
-		473A0C272649B66900D5D1DF /* Rocket+Arrange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Rocket+Arrange.swift"; sourceTree = "<group>"; };
 		473A0C2C2649B68500D5D1DF /* Links+Arrange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Links+Arrange.swift"; sourceTree = "<group>"; };
 		473A0C352649B92600D5D1DF /* CompanyInfo+Arrange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CompanyInfo+Arrange.swift"; sourceTree = "<group>"; };
 		473A0C3D2649CFD800D5D1DF /* CompanyInfoServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyInfoServiceTests.swift; sourceTree = "<group>"; };
@@ -119,7 +116,6 @@
 		4769243026458A5F00E47A7E /* LaunchesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchesService.swift; sourceTree = "<group>"; };
 		4769243526458AEE00E47A7E /* Launch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Launch.swift; sourceTree = "<group>"; };
 		476924432645AB6100E47A7E /* LaunchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchViewModel.swift; sourceTree = "<group>"; };
-		476924482645ABF700E47A7E /* Rocket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rocket.swift; sourceTree = "<group>"; };
 		476924502649903900E47A7E /* CompanyInfoViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyInfoViewModelTests.swift; sourceTree = "<group>"; };
 		476924582649A9EF00E47A7E /* Links.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Links.swift; sourceTree = "<group>"; };
 		477D8C4726F92C7200389ADA /* Filter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
@@ -220,7 +216,6 @@
 				473A0C352649B92600D5D1DF /* CompanyInfo+Arrange.swift */,
 				473A0C1F2649B63200D5D1DF /* Launch+Arrange.swift */,
 				473A0C2C2649B68500D5D1DF /* Links+Arrange.swift */,
-				473A0C272649B66900D5D1DF /* Rocket+Arrange.swift */,
 			);
 			path = Arrangers;
 			sourceTree = "<group>";
@@ -266,7 +261,6 @@
 				47A1D87B2651ABCA006B03F6 /* LaunchOrder.swift */,
 				47A1D8762651ABA8006B03F6 /* LaunchOutcome.swift */,
 				476924582649A9EF00E47A7E /* Links.swift */,
-				476924482645ABF700E47A7E /* Rocket.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -619,7 +613,6 @@
 				47C1A08326D29D9200702C1C /* StubbedSession.swift in Sources */,
 				47D9010B26F7B4C700E8568D /* TableSection.swift in Sources */,
 				471AF3DD26CFF31100F48E37 /* LaunchesStateView.swift in Sources */,
-				476924492645ABF700E47A7E /* Rocket.swift in Sources */,
 				47D9010626F7B15900E8568D /* UITableView+Dequeue.swift in Sources */,
 				4782D8C3265092CB00E0229E /* CachedImage.swift in Sources */,
 			);
@@ -635,7 +628,6 @@
 				476924512649903900E47A7E /* CompanyInfoViewModelTests.swift in Sources */,
 				473A0C202649B63200D5D1DF /* Launch+Arrange.swift in Sources */,
 				473A0C362649B92600D5D1DF /* CompanyInfo+Arrange.swift in Sources */,
-				473A0C282649B66900D5D1DF /* Rocket+Arrange.swift in Sources */,
 				473A0C3E2649CFD800D5D1DF /* CompanyInfoServiceTests.swift in Sources */,
 				4780E9C026445E1B0027D12B /* LaunchViewModelTests.swift in Sources */,
 				473A68E4264B295C00D8A14B /* LaunchesFilterApplicatorTests.swift in Sources */,

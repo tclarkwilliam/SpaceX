@@ -7,16 +7,20 @@
 
 struct Links: Decodable {
 
-  let missionImagePath: String?
+  let patch: Patch?
   let article: String?
   let wikipedia: String?
   let video: String?
 
   private enum CodingKeys: String, CodingKey {
-    case missionImagePath = "mission_patch_small"
+    case patch
     case article = "article_link"
     case wikipedia
     case video = "video_link"
   }
 
+}
+
+struct Patch: Decodable {
+  let small: String?
 }

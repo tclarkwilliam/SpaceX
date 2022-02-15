@@ -19,12 +19,8 @@ struct LaunchViewModel {
     launch.missionName
   }
 
-  var formattedRocket: String {
-    "\(launch.rocket.name) / \(launch.rocket.type)"
-  }
-
   var missionImagePath: String? {
-    launch.links.missionImagePath
+    launch.links.patch?.small
   }
 
   var articleURL: URL? {

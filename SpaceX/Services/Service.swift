@@ -29,7 +29,7 @@ class Service {
 
 extension Service {
   enum Constants: String {
-    case baseURL = "https://api.spacexdata.com/v3/"
+    case baseURL = "https://api.spacexdata.com/v4/"
   }
 }
 

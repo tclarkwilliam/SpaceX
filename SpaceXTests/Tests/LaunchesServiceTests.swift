@@ -53,13 +53,11 @@ class LaunchesServiceTests: XCTestCase {
   }
 
   private func launchesDictionary(isValidData: Bool) -> [String: Any] {
-    let rocketDictionary = ["rocket_name": "Name",
-                            "rocket_type": "Type"]
-    let linksDictionary = ["mission_patch_small": "url.png"]
-    return ["mission_name": isValidData ? "Name" : 1,
-            "rocket": rocketDictionary,
-            "launch_date_local": "2020-10-24T11:31:00-04:00",
-            "launch_success": true,
+    let patch = ["small": "url.png"]
+    let linksDictionary = ["patch": patch]
+    return ["name": isValidData ? "Name" : 1,
+            "date_local": "2020-10-24T11:31:00-04:00",
+            "success": true,
             "links": linksDictionary]
   }
 }

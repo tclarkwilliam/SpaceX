@@ -44,9 +44,8 @@ class LaunchesViewController: UIViewController {
     }
   }
 
-  private func configureCompanyInfoSection(from companyInfo: CompanyInfo) {
-    let companyInfoViewModel = CompanyInfoViewModel(companyInfo: companyInfo)
-    let rows = [CompanyTableRow(viewModel: companyInfoViewModel)]
+  private func configureCompanyInfoSection(from companyInfo: CompanyInfoViewModel) {
+    let rows = [CompanyTableRow(viewModel: companyInfo)]
     companyInfoSection = TableViewSection(title: Constants.companySectionHeader.rawValue,
                                           rows: rows)
   }
@@ -55,9 +54,8 @@ class LaunchesViewController: UIViewController {
     LaunchesService().fetchLaunches { result in
       switch result {
       case .success(let launches):
-        let launchViewModels = launches.compactMap { LaunchViewModel(launch: $0) }
-        self.launchViewModels = launchViewModels
-        self.configureLaunchesSection(with: launchViewModels)
+        self.launchViewModels = launches
+        self.configureLaunchesSection(with: launches)
         self.configureFilter()
         self.showLaunches()
       case .failure(_):

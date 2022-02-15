@@ -9,7 +9,7 @@ import Foundation
 
 class LaunchesService {
 
-  typealias Completion = (Result<[Launch], Error>) -> Void
+  typealias Completion = (Result<[LaunchViewModel], Error>) -> Void
 
   private let service: Service
 
@@ -31,7 +31,8 @@ class LaunchesService {
       let decoder = JSONDecoder()
       decoder.dateDecodingStrategy = .iso8601
       let launches = try decoder.decode([Launch].self, from: data)
-      completion(.success(launches))
+      let viewModels = launches.compactMap { LaunchViewModel(launch: $0) }
+      completion(.success(viewModels))
     } catch {
       completion(.failure(error))
     }

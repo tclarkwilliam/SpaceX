@@ -27,12 +27,8 @@ class LaunchViewModelTests: XCTestCase {
     XCTAssertEqual(subject.missionName, "Mission")
   }
 
-  func test_formattedRocket_returnsFormattedRocket() {
-    XCTAssertEqual(subject.formattedRocket, "Rocket / Type")
-  }
-
   func test_launchDate_returnsLaunchDate() {
-    XCTAssertEqual(subject.launchDate, "January 1, 1970 at 1:00:00 AM GMT+1")
+    XCTAssertEqual(subject.launchDate, "1 January 1970 at 01:00:00 GMT+1")
   }
 
   func test_isLaunchSuccessful_returnsIsLaunchSuccessful() {
