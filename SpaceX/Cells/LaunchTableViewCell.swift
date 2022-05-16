@@ -19,7 +19,7 @@ class LaunchTableViewCell: UITableViewCell {
   @IBOutlet weak private var outcomeImageView: UIImageView!
 
   func configure(viewModel: LaunchViewModel) {
-    configureImage(nil)
+    configureImage(placeholderImage)
     missionLabel.text = viewModel.missionName
     dateLabel.text = viewModel.launchDate
     startingPointLabel.text = viewModel.launchDateDaysPrefix
@@ -30,6 +30,12 @@ class LaunchTableViewCell: UITableViewCell {
 
   func configureImage(_ image: UIImage?) {
     missionImageView.image = image
+  }
+
+  private var placeholderImage: UIImage? {
+    let configuration = UIImage.SymbolConfiguration(weight: .ultraLight)
+    return UIImage(systemName: "airplane.circle",
+                   withConfiguration: configuration)
   }
   
 }
