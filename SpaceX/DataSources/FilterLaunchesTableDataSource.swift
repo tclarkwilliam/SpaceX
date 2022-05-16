@@ -11,6 +11,10 @@ class FilterLaunchesTableDataSource {
 
   private var filterRows = [TableRow]()
   private var dataSource: TableDataSource?
+  private var successRow: LaunchOutcomeTableRow? = .init(launchOutcome: .success)
+  private var failureRow: LaunchOutcomeTableRow? = .init(launchOutcome: .failure)
+  private var ascendingRow: LaunchOrderTableRow? = .init(launchOrder: .ascending)
+  private var descendingRow: LaunchOrderTableRow? = .init(launchOrder: .descending)
 
   private let tableView: UITableView
   private let launchViewModels: [LaunchViewModel]
@@ -34,11 +38,15 @@ class FilterLaunchesTableDataSource {
   }
 
   private func launchOutcomeSection() -> TableViewSection {
-    let successRow = LaunchOutcomeTableRow(launchOutcome: .success)
-    let failureRow = LaunchOutcomeTableRow(launchOutcome: .failure)
-    successRow.didSelect = { failureRow.deselect(tableView: self.tableView) }
-    failureRow.didSelect = { successRow.deselect(tableView: self.tableView) }
-    let rows = [successRow, failureRow]
+    successRow?.didSelect = { [weak self] in
+      guard let self = self else { return }
+      self.failureRow?.deselect(tableView: self.tableView)
+    }
+    failureRow?.didSelect = { [weak self] in
+      guard let self = self else { return }
+      self.successRow?.deselect(tableView: self.tableView)
+    }
+    let rows = [successRow, failureRow].compactMap { $0 }
     filterRows.append(contentsOf: rows)
     return TableViewSection(title: Constants.launchSuccess.rawValue,
                             rows: rows)
@@ -60,11 +68,15 @@ class FilterLaunchesTableDataSource {
   }
 
   private func launchOrderSection() -> TableViewSection {
-    let ascendingRow = LaunchOrderTableRow(launchOrder: .ascending)
-    let descendingRow = LaunchOrderTableRow(launchOrder: .descending)
-    ascendingRow.didSelect = { descendingRow.deselect(tableView: self.tableView) }
-    descendingRow.didSelect = { ascendingRow.deselect(tableView: self.tableView) }
-    let rows = [ascendingRow, descendingRow]
+    ascendingRow?.didSelect = { [weak self] in
+      guard let self = self else { return }
+      self.descendingRow?.deselect(tableView: self.tableView)
+    }
+    descendingRow?.didSelect = { [weak self] in
+      guard let self = self else { return }
+      self.ascendingRow?.deselect(tableView: self.tableView)
+    }
+    let rows = [ascendingRow, descendingRow].compactMap { $0 }
     filterRows.append(contentsOf: rows)
     return TableViewSection(title: Constants.sort.rawValue,
                             rows: rows)

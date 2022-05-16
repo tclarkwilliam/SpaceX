@@ -67,7 +67,7 @@ class LaunchesViewController: UIViewController {
   private func configureLaunchesSection(with launchViewModels: [LaunchViewModel]) {
     let rows = launchViewModels.compactMap { viewModel -> LaunchesTableRow? in
       let row = LaunchesTableRow(viewModel: viewModel)
-      row.didSelect = { self.showLinkOptions(indexPath: $0, viewModel: viewModel) }
+      row.didSelect = { [weak self] in self?.showLinkOptions(indexPath: $0, viewModel: viewModel) }
       return row
     }
     launchesSection = TableViewSection(title: Constants.launchesSectionHeader.rawValue,
@@ -106,7 +106,7 @@ class LaunchesViewController: UIViewController {
 
   @objc private func showFilter() {
     guard let viewController = filterLaunchesViewController() else { return }
-    viewController.updateLaunches = { self.updateLaunchesSection(with: $0) }
+    viewController.updateLaunches = { [weak self] in self?.updateLaunchesSection(with: $0) }
     let navigationController = UINavigationController(rootViewController: viewController)
     navigationController.navigationBar.tintColor = .black
     present(navigationController, animated: true)
