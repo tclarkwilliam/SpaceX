@@ -8,13 +8,21 @@
 import SwiftUI
 
 struct LaunchesErrorView: View {
+
+  private let error: ServiceError
+
+  init(error: ServiceError) {
+    self.error = error
+  }
+  
   var body: some View {
-    VStack(spacing: 8) {
-      Image(systemName: "exclamationmark.icloud")
+    VStack(spacing: 50) {
+      Image(systemName: "sleep")
         .resizable()
         .scaledToFit()
-        .frame(width: 200, height: 200)
-      Text("Unable to load launches")
+        .frame(width: 150, height: 150)
+      Text("Unable to load launches due to \(error.rawValue)")
+        .multilineTextAlignment(.center)
     }
   }
 }

@@ -11,15 +11,15 @@ class LaunchesStateView: UIView {
 
   enum State {
     case loading
-    case error
+    case error(ServiceError)
   }
 
   func configure(_ state: State) {
     switch state {
     case .loading:
       show(AnyView(LaunchesLoadingView()))
-    case .error:
-      show(AnyView(LaunchesErrorView()))
+    case .error(let error):
+      show(AnyView(LaunchesErrorView(error: error)))
     }
   }
 

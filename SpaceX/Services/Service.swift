@@ -33,7 +33,8 @@ extension Service {
   }
 }
 
-enum ServiceError: Error {
-  case invalidData
-  case invalidURL
+enum ServiceError: String, Error {
+  case invalidData = "invalid data"
+  case invalidURL = "invalid URL"
+  case decoding
 }

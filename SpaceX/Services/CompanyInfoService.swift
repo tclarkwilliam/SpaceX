@@ -9,7 +9,7 @@ import Foundation
 
 class CompanyInfoService {
 
-  typealias Completion = (Result<CompanyInfoViewModel, Error>) -> Void
+  typealias Completion = (Result<CompanyInfoViewModel, ServiceError>) -> Void
 
   private let service: Service
 
@@ -26,13 +26,13 @@ class CompanyInfoService {
 
   private func handleResponse(data: Data?,
                               completion: Completion) {
-    guard let data = data else { return completion(.failure(ServiceError.invalidData)) }
+    guard let data = data else { return completion(.failure(.invalidData)) }
     do {
       let companyInfo = try JSONDecoder().decode(CompanyInfo.self, from: data)
       let viewModel = CompanyInfoViewModel(companyInfo: companyInfo)
       completion(.success(viewModel))
     } catch {
-      completion(.failure(error))
+      completion(.failure(.decoding))
     }
   }
 

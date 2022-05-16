@@ -38,8 +38,8 @@ class LaunchesViewController: UIViewController {
       case .success(let companyInfo):
         self.configureCompanyInfoSection(from: companyInfo)
         self.fetchLaunches()
-      case .failure(_):
-        self.showError()
+      case .failure(let error):
+        self.showError(error)
       }
     }
   }
@@ -58,8 +58,8 @@ class LaunchesViewController: UIViewController {
         self.configureLaunchesSection(with: launches)
         self.configureFilter()
         self.showLaunches()
-      case .failure(_):
-        self.showError()
+      case .failure(let error):
+        self.showError(error)
       }
     }
   }
@@ -87,8 +87,8 @@ class LaunchesViewController: UIViewController {
     stateView.configure(.loading)
   }
 
-  private func showError() {
-    stateView.configure(.error)
+  private func showError(_ error: ServiceError) {
+    stateView.configure(.error(error))
   }
 
   private func showLaunches() {
