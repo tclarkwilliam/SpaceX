@@ -26,7 +26,7 @@ class ImageService {
       completion(.success(UIImage(data: data)))
     } else {
       guard let url = URL(string: path) else { return completion(.failure(.invalidURL)) }
-      service.fetch(url: url) { data, response, error in
+      service.fetch(url: url) { data, error in
         guard let data = data else { return completion(.failure(.invalidData)) }
         self.cache.save(CachedImage(data: data),
                         path: self.imageCacheName)

@@ -9,15 +9,23 @@ import Foundation
 
 class StubbedSession: Session {
 
+  var data: Data?
+  var error: Error?
+
   func dataTask(with url: URL,
                 completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) -> URLSessionDataTask {
-    switch url {
-    case URL(string: "\(Service.Constants.baseURL.rawValue)company"):
-      completionHandler(data(resource: "CompanyInfo"), nil, nil)
-    case URL(string: "\(Service.Constants.baseURL.rawValue)launches"):
-      completionHandler(data(resource: "Launches"), nil, nil)
-    default:
-      completionHandler(nil, nil, nil)
+    let isRunningUITests = CommandLine.arguments.contains("UITests")
+    if isRunningUITests {
+      switch url {
+      case URL(string: "\(Service.Constants.baseURL.rawValue)company"):
+        completionHandler(data(resource: "CompanyInfo"), nil, nil)
+      case URL(string: "\(Service.Constants.baseURL.rawValue)launches"):
+        completionHandler(data(resource: "Launches"), nil, nil)
+      default:
+        completionHandler(nil, nil, nil)
+      }
+    } else {
+      completionHandler(data, nil, error)
     }
     return URLSession.shared.dataTask(with: url)
   }

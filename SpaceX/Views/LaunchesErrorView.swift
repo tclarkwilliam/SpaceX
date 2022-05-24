@@ -21,8 +21,9 @@ struct LaunchesErrorView: View {
         .resizable()
         .scaledToFit()
         .frame(width: 150, height: 150)
-      Text("Unable to load launches due to \(error.rawValue)")
+      Text("Unable to load launches due to \(error.message)")
         .multilineTextAlignment(.center)
     }
   }
+  
 }

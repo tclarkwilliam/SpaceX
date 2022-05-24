@@ -84,3 +84,11 @@ struct LaunchViewModel {
   }()
 
 }
+
+final class LaunchesServiceConfig: ServiceConfig {
+
+  static var url: URL? {
+    URL(string: "\(Service.Constants.baseURL.rawValue)launches")
+  }
+
+}

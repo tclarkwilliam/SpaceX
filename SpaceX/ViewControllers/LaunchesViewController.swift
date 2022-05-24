@@ -16,6 +16,7 @@ class LaunchesViewController: UIViewController {
   private var companyInfoSection: TableViewSection?
   private var launchesSection: TableViewSection?
   private var tableDataSource: TableDataSource?
+  private let service = Service()
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -33,10 +34,11 @@ class LaunchesViewController: UIViewController {
 
   private func fetchCompanyInfo() {
     showLoading()
-    CompanyInfoService().fetchInfo { result in
+    service.fetch(url: CompanyInfoServiceConfig.url) { (result: Result<CompanyInfo, ServiceError>) in
       switch result {
       case .success(let companyInfo):
-        self.configureCompanyInfoSection(from: companyInfo)
+        let companyInfoViewModel = CompanyInfoViewModel(companyInfo: companyInfo)
+        self.configureCompanyInfoSection(from: companyInfoViewModel)
         self.fetchLaunches()
       case .failure(let error):
         self.showError(error)
@@ -51,11 +53,12 @@ class LaunchesViewController: UIViewController {
   }
 
   private func fetchLaunches() {
-    LaunchesService().fetchLaunches { result in
+    service.fetch(url: LaunchesServiceConfig.url) { (result: Result<[Launch], ServiceError>) in
       switch result {
       case .success(let launches):
-        self.launchViewModels = launches
-        self.configureLaunchesSection(with: launches)
+        let launchViewModels = launches.compactMap { LaunchViewModel(launch: $0) }
+        self.launchViewModels = launchViewModels
+        self.configureLaunchesSection(with: launchViewModels)
         self.configureFilter()
         self.showLaunches()
       case .failure(let error):

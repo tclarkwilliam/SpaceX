@@ -34,3 +34,15 @@ struct CompanyInfoViewModel {
   }()
 
 }
+
+protocol ServiceConfig {
+  static var url: URL? { get }
+}
+
+final class CompanyInfoServiceConfig: ServiceConfig {
+
+  static var url: URL? {
+    URL(string: "\(Service.Constants.baseURL.rawValue)company")
+  }
+
+}
